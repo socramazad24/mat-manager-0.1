@@ -1,0 +1,81 @@
+Date : 2024-05-12 11:56:36
+Directory : d:\xampp\htdocs\mat-manager\ALL
+Total : 40 files,  3727 codes, 153 comments, 420 blanks, all 4300 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| PHP      |         36 |      1,870 |         50 |        360 |      2,280 |
+| JSON     |          2 |      1,660 |          0 |          2 |      1,662 |
+| SQL      |          1 |        196 |        103 |         58 |        357 |
+| XML      |          1 |          1 |          0 |          0 |          1 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                   |         40 |      3,727 |        153 |        420 |      4,300 |
+| . (Files)                                                           |          6 |      1,728 |          5 |         19 |      1,752 |
+| CRUD                                                                |         12 |        282 |          4 |         90 |        376 |
+| admin                                                               |          1 |          3 |          0 |          6 |          9 |
+| base de datos                                                       |          1 |        196 |        103 |         58 |        357 |
+| bodeguero                                                           |          1 |         29 |          0 |          0 |         29 |
+| gerente                                                             |          1 |         29 |          0 |          6 |         35 |
+| historial                                                           |          5 |        460 |         16 |         75 |        551 |
+| images                                                              |          1 |          1 |          0 |          0 |          1 |
+| materiales                                                          |          1 |         98 |          2 |         19 |        119 |
+| pedidos                                                             |          1 |        108 |          2 |         26 |        136 |
+| proveedores                                                         |          1 |         94 |          2 |         20 |        116 |
+| tables                                                              |          4 |        469 |         16 |         72 |        557 |
+| users                                                               |          1 |         72 |          3 |         20 |         95 |
+| validaciones                                                        |          4 |        158 |          0 |          9 |        167 |
++---------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                            | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\EditUser.php                   | PHP      |         36 |          1 |         19 |         56 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\deletePedido.php               | PHP      |         18 |          0 |          2 |         20 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\deleteProveedores.php          | PHP      |         18 |          0 |          3 |         21 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\deleteUser.php                 | PHP      |         18 |          0 |          3 |         21 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\editPedido.php                 | PHP      |         59 |          1 |         18 |         78 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\editar.php                     | PHP      |         35 |          0 |         15 |         50 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\editarProveedores.php          | PHP      |         34 |          1 |         10 |         45 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\eliminar.php                   | PHP      |         18 |          1 |          6 |         25 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\update.php                     | PHP      |         15 |          0 |          5 |         20 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\updatePedidos.php              | PHP      |         14 |          0 |          4 |         18 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\updateProveedores.php          | PHP      |          0 |          0 |          1 |          1 |
+| d:\xampp\htdocs\mat-manager\ALL\CRUD\updateUser.php                 | PHP      |         17 |          0 |          4 |         21 |
+| d:\xampp\htdocs\mat-manager\ALL\admin\index.php                     | PHP      |          3 |          0 |          6 |          9 |
+| d:\xampp\htdocs\mat-manager\ALL\base de datos\mat-manager.sql       | SQL      |        196 |        103 |         58 |        357 |
+| d:\xampp\htdocs\mat-manager\ALL\bodeguero\index.php                 | PHP      |         29 |          0 |          0 |         29 |
+| d:\xampp\htdocs\mat-manager\ALL\composer.json                       | JSON     |         10 |          0 |          1 |         11 |
+| d:\xampp\htdocs\mat-manager\ALL\composer.lock                       | JSON     |      1,650 |          0 |          1 |      1,651 |
+| d:\xampp\htdocs\mat-manager\ALL\con_db.php                          | PHP      |          3 |          0 |          1 |          4 |
+| d:\xampp\htdocs\mat-manager\ALL\gerente\index.php                   | PHP      |         29 |          0 |          6 |         35 |
+| d:\xampp\htdocs\mat-manager\ALL\historial\historial.php             | PHP      |         13 |          0 |          7 |         20 |
+| d:\xampp\htdocs\mat-manager\ALL\historial\historialMateriales.php   | PHP      |        110 |          4 |         18 |        132 |
+| d:\xampp\htdocs\mat-manager\ALL\historial\historialPedidos.php      | PHP      |        109 |          4 |         20 |        133 |
+| d:\xampp\htdocs\mat-manager\ALL\historial\historialProveedores.php  | PHP      |        112 |          4 |         15 |        131 |
+| d:\xampp\htdocs\mat-manager\ALL\historial\historialUsuarios.php     | PHP      |        116 |          4 |         15 |        135 |
+| d:\xampp\htdocs\mat-manager\ALL\images\pen-to-square-solid.svg      | XML      |          1 |          0 |          0 |          1 |
+| d:\xampp\htdocs\mat-manager\ALL\index.php                           | PHP      |         27 |          0 |          9 |         36 |
+| d:\xampp\htdocs\mat-manager\ALL\loginUser.php                       | PHP      |         33 |          5 |          7 |         45 |
+| d:\xampp\htdocs\mat-manager\ALL\logout.php                          | PHP      |          5 |          0 |          0 |          5 |
+| d:\xampp\htdocs\mat-manager\ALL\materiales\registerMateriales.php   | PHP      |         98 |          2 |         19 |        119 |
+| d:\xampp\htdocs\mat-manager\ALL\pedidos\RegistrarPedido.php         | PHP      |        108 |          2 |         26 |        136 |
+| d:\xampp\htdocs\mat-manager\ALL\proveedores\RegisterProveedores.php | PHP      |         94 |          2 |         20 |        116 |
+| d:\xampp\htdocs\mat-manager\ALL\tables\MaterialsTable.php           | PHP      |        115 |          4 |         21 |        140 |
+| d:\xampp\htdocs\mat-manager\ALL\tables\TablaPedidos.php             | PHP      |        113 |          4 |         21 |        138 |
+| d:\xampp\htdocs\mat-manager\ALL\tables\TablaProveedores.php         | PHP      |        119 |          4 |         16 |        139 |
+| d:\xampp\htdocs\mat-manager\ALL\tables\recuperarUsuarios.php        | PHP      |        122 |          4 |         14 |        140 |
+| d:\xampp\htdocs\mat-manager\ALL\users\register.php                  | PHP      |         72 |          3 |         20 |         95 |
+| d:\xampp\htdocs\mat-manager\ALL\validaciones\validarMateriales.php  | PHP      |         38 |          0 |          3 |         41 |
+| d:\xampp\htdocs\mat-manager\ALL\validaciones\validarPedidos.php     | PHP      |         32 |          0 |          0 |         32 |
+| d:\xampp\htdocs\mat-manager\ALL\validaciones\validarProveedor.php   | PHP      |         38 |          0 |          3 |         41 |
+| d:\xampp\htdocs\mat-manager\ALL\validaciones\validarUsuarios.php    | PHP      |         50 |          0 |          3 |         53 |
+| Total                                                               |          |      3,727 |        153 |        420 |      4,300 |
++---------------------------------------------------------------------+----------+------------+------------+------------+------------+
