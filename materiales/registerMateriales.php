@@ -16,12 +16,12 @@
 <header>
     <?php
         require_once "../templates/header2.php"; 
-        $pageTitle = "Header"; 
+        $pageTitle = "Header";
         use templates\header2;
 
         $header = new header2();
         $header -> head2($pageTitle);
-    ; ?>
+    ?>
 </header>
 <div class="container mx-auto py-10">
     <div class="flex justify-center items-center">

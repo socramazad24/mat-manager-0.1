@@ -40,13 +40,13 @@
 <body>
     <header>
     <?php
-        require_once "../templates/header2.php"; 
-        $pageTitle = "Header"; 
+        require_once "../templates/header2.php";
+        $pageTitle = "Header";
         use templates\header2;
 
         $header = new header2();
         $header -> head2($pageTitle);
-    ; ?>
+    ?>
     </header>
     
     <div class="flex min-h-screen bg-gray-50 justify-center">
