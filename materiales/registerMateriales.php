@@ -67,74 +67,90 @@
     </div>
 </div>
 <?php 
-    include ("../con_db.php");
-    if (isset($_POST['register'])){
-        $idMaterial = trim($_POST['idMaterial']);
-        $MaterialName = trim($_POST['MaterialName']);
-        $Description = trim($_POST['Description']);
-        $costoUnitario = trim($_POST['costoUnitario']);
-        $cantidadMaterial = trim($_POST['cantidadMaterial']);
-        $proovedor = isset($_POST['proovedor']) ? trim($_POST['proovedor']) : '';
-        $datereg = date("y/m/d");
-        $errors = array(); // Array para almacenar mensajes de error
+include ("../con_db.php");
 
-        // Validación de campos obligatorios
-        if (
-            strlen($idMaterial) < 1 ||
-            strlen($MaterialName) < 1 ||
-            strlen($Description) < 1 ||
-            strlen($costoUnitario) < 1 ||
-            strlen($cantidadMaterial) < 1 ||
-            strlen($proovedor) < 1
-        ) {
-            $errors[] = "Por favor, complete todos los campos.";
-        }
+if (isset($_POST['register'])){
+    // Recoger los datos del formulario y eliminar espacios en blanco
+    $idMaterial = trim($_POST['idMaterial']);
+    $MaterialName = trim($_POST['MaterialName']);
+    $Description = trim($_POST['Description']);
+    $costoUnitario = trim($_POST['costoUnitario']);
+    $cantidadMaterial = trim($_POST['cantidadMaterial']);
+    $proovedor = isset($_POST['proovedor']) ? trim($_POST['proovedor']) : '';
+    $datereg = date("y/m/d");
+    $errors = array(); // Array para almacenar mensajes de error
 
-        // Validación del campo proovedor
-        if ($proovedor == '') {
-            $errors[] = "Por favor, seleccione un proveedor.";
-        }
+    // Validaciones de campos
+    if (strlen($idMaterial) < 1 || strlen($MaterialName) < 1 || strlen($Description) < 1 || strlen($costoUnitario) < 1 || strlen($cantidadMaterial) < 1 || strlen($proovedor) < 1) {
+        $errors[] = "Por favor, complete todos los campos.";
+    }
 
-        // Validación de existencia de material
-        $consultaMaterial = "SELECT * FROM materiales WHERE idMaterial = '$idMaterial'";
-        $resultadoMaterial = mysqli_query($conex, $consultaMaterial);
-        if (mysqli_num_rows($resultadoMaterial) > 0) {
-            $errors[] = "El ID del material ya está registrado. Por favor, introduzca otro ID.";
-        }
+    // Validación del campo proovedor
+    if ($proovedor == '') {
+        $errors[] = "Por favor, seleccione un proveedor.";
+    }
 
-        // Si hay errores, muestra una alerta con SweetAlert2
-        if (!empty($errors)) {
+    // Validaciones de longitud y rangos específicos
+    if (strlen($idMaterial) > 4) {
+        $errors[] = "El ID del material excede el límite de caracteres permitido (4 caracteres de la forma N000).";
+    }
+    if (strlen($MaterialName) > 30) {
+        $errors[] = "El nombre del material excede el límite de caracteres permitido (30 caracteres).";
+    }
+    if (strlen($Description) > 100) {
+        $errors[] = "La descripción del material excede el límite de caracteres permitido (100 caracteres).";
+    }
+    if ($costoUnitario < 10000 || $costoUnitario > 999999) {
+        $errors[] = "El costo no está dentro del rango permitido (mínimo 10000, máximo 999999).";
+    }
+    if ($cantidadMaterial < 1 || $cantidadMaterial > 100) {
+        $errors[] = "La cantidad no está dentro del rango permitido (mínimo 1, máximo 100).";
+    }
+    if (strlen($proovedor) > 50) {
+        $errors[] = "El nombre del proveedor excede el límite de caracteres permitido (50 caracteres).";
+    }
+
+    // Validación de existencia de material
+    $consultaMaterial = "SELECT * FROM materiales WHERE idMaterial = '$idMaterial'";
+    $resultadoMaterial = mysqli_query($conex, $consultaMaterial);
+    if (mysqli_num_rows($resultadoMaterial) > 0) {
+        $errors[] = "El ID del material ya está registrado. Por favor, introduzca otro ID.";
+    }
+
+    // Si hay errores, muestra una alerta con SweetAlert2
+    if (!empty($errors)) {
+        echo "<script>";
+        echo "Swal.fire({";
+        echo "  icon: 'error',";
+        echo "  title: 'Error',";
+        echo "  html: '" . implode("<br>", $errors) . "'";
+        echo "});";
+    } else {
+        // Si no hay errores, procede con el registro
+        $consulta = "INSERT INTO materiales(idMaterial, MaterialName, Description, costoUnitario, cantidadMaterial, proovedor, date_reg) 
+        VALUES ('$idMaterial', '$MaterialName', '$Description', '$costoUnitario', '$cantidadMaterial', '$proovedor', '$datereg')";
+        $resultado = mysqli_query($conex, $consulta);
+        if ($resultado){
+            // Registro exitoso, muestra una alerta con SweetAlert2
+            echo "<script>";
+            echo "Swal.fire({";
+            echo "  icon: 'success',";
+            echo "  title: 'Éxito',";
+            echo "  text: 'Material registrado exitosamente.'";
+            echo "});";
+        } else {
+            // Error en el registro, muestra una alerta con SweetAlert2
             echo "<script>";
             echo "Swal.fire({";
             echo "  icon: 'error',";
             echo "  title: 'Error',";
-            echo "  html: '" . implode("<br>", $errors) . "'";
+            echo "  text: 'Algo ha salido mal.'";
             echo "});";
-        } else {
-            // Si no hay errores, procede con el registro
-            $consulta = "INSERT INTO materiales(idMaterial, MaterialName, Description, costoUnitario, cantidadMaterial, proovedor, date_reg) 
-            VALUES ('$idMaterial', '$MaterialName', '$Description', '$costoUnitario', '$cantidadMaterial', '$proovedor', '$datereg')";
-            $resultado = mysqli_query($conex, $consulta);
-            if ($resultado){
-                // Registro exitoso, muestra una alerta con SweetAlert2
-                echo "<script>";
-                echo "Swal.fire({";
-                echo "  icon: 'success',";
-                echo "  title: 'Éxito',";
-                echo "  text: 'Material registrado exitosamente.'";
-                echo "});";
-            } else {
-                // Error en el registro, muestra una alerta con SweetAlert2
-                echo "<script>";
-                echo "Swal.fire({";
-                echo "  icon: 'error',";
-                echo "  title: 'Error',";
-                echo "  text: 'Algo ha salido mal.'";
-                echo "});";
-            }
         }
     }
-    mysqli_close($conex);
+}
+
+mysqli_close($conex);
 ?>
 <footer> 
     <?php $pageTitle = "Footer"; include '../templates/footer.php'; ?>
