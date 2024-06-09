@@ -1,11 +1,8 @@
 <?php
-namespace registerMaterials;
-require_once "../templates/header2.php";
+namespace materiales;
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
-require_once "../Auth.php";
-use Auth\AuthClass;
-$auth = new AuthClass();
-$auth->AuthF();
+//marcos
 use LoginUser\Database;
 use templates\header2;
 

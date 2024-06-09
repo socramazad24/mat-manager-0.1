@@ -63,7 +63,7 @@ Files
 | d:\xampp\htdocs\mat-manager\ALL\historial\historialUsuarios.php     | PHP      |        116 |          4 |         15 |        135 |
 | d:\xampp\htdocs\mat-manager\ALL\images\pen-to-square-solid.svg      | XML      |          1 |          0 |          0 |          1 |
 | d:\xampp\htdocs\mat-manager\ALL\index.php                           | PHP      |         27 |          0 |          9 |         36 |
-| d:\xampp\htdocs\mat-manager\ALL\loginUser.php                       | PHP      |         33 |          5 |          7 |         45 |
+| d:\xampp\htdocs\mat-manager\ALL\matmanager.php                       | PHP      |         33 |          5 |          7 |         45 |
 | d:\xampp\htdocs\mat-manager\ALL\logout.php                          | PHP      |          5 |          0 |          0 |          5 |
 | d:\xampp\htdocs\mat-manager\ALL\materiales\registerMateriales.php   | PHP      |         98 |          2 |         19 |        119 |
 | d:\xampp\htdocs\mat-manager\ALL\pedidos\RegistrarPedido.php         | PHP      |        108 |          2 |         26 |        136 |

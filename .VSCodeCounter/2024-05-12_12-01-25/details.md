@@ -37,7 +37,7 @@ Total : 47 files,  4095 codes, 180 comments, 510 blanks, all 4785 lines
 | [ALL/historial/historialUsuarios.php](/ALL/historial/historialUsuarios.php) | PHP | 116 | 4 | 15 | 135 |
 | [ALL/images/pen-to-square-solid.svg](/ALL/images/pen-to-square-solid.svg) | XML | 1 | 0 | 0 | 1 |
 | [ALL/index.php](/ALL/index.php) | PHP | 27 | 0 | 9 | 36 |
-| [ALL/loginUser.php](/ALL/loginUser.php) | PHP | 33 | 5 | 7 | 45 |
+| [ALL/matmanager.php](/ALL/matmanager.php) | PHP | 33 | 5 | 7 | 45 |
 | [ALL/logout.php](/ALL/logout.php) | PHP | 5 | 0 | 0 | 5 |
 | [ALL/materiales/registerMateriales.php](/ALL/materiales/registerMateriales.php) | PHP | 98 | 2 | 19 | 119 |
 | [ALL/pedidos/RegistrarPedido.php](/ALL/pedidos/RegistrarPedido.php) | PHP | 108 | 2 | 26 | 136 |

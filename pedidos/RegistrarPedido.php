@@ -1,13 +1,11 @@
 <?php
-namespace registerOrder;
-require_once "../templates/header2.php";
+namespace pedidos;
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
-require_once "../Auth.php";
-use Auth\AuthClass;
-$auth = new AuthClass();
-$auth->AuthF();
+//marcos
 use LoginUser\Database;
-use templates\header2;
+use templates\Footer;
+use templates\header3;
 
 class Order {
     public function render() {
@@ -27,7 +25,10 @@ class Order {
         </head>
         <body>
             <header>
-                <?php $pageTitle = "Header"; include '../templates/header3.php';?>
+                <?php $pageTitle = "Header";
+                    $header = new header3;
+                    $header->head3($pageTitle);
+                ?>
             </header>
             <div class="bg-gray-200 w-screen min-h-screen flex items-center justify-center">
                 <div class="w-full py-8">
@@ -126,7 +127,10 @@ class Order {
                 </div>
             </div>
             <footer> 
-                <?php $pageTitle = "Footer"; include '../templates/footer.php';?>
+                <?php $pageTitle = "Footer"; 
+                    $header = new Footer;
+                    $header-> Footer($pageTitle);
+                ?>
             </footer>
         </body>
         </html>

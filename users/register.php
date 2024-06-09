@@ -1,8 +1,10 @@
 <?php
 namespace RegisterUser;
-require_once "../templates/header2.php";
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
 use LoginUser\Database;
+use templates\Footer;
+use templates\header;
 use templates\header2;
 $db = new Database();
 $conex = $db->getConnection();
@@ -29,7 +31,10 @@ class RegisterUserClass {
         </head>
         <body>
             <header>
-                <?php $pageTitle = "Header"; include '../templates/header.php';?>
+                <?php $pageTitle = "Header"; 
+                    $header = new header;
+                    $header-> head($pageTitle);
+                ?>
             </header>
             <div class="bg-gray-200 w-screen min-h-screen flex items-center justify-center">
                 <div class="w-full py-8">
@@ -212,7 +217,10 @@ class RegisterUserClass {
 
             </div>
             <footer> 
-            <?php $pageTitle = "Footer"; include '../templates/footer.php';?>
+            <?php $pageTitle = "Footer"; 
+                $header =new Footer;
+                $header -> Footer($pageTitle);
+            ?>
 
             </footer>
         </body>

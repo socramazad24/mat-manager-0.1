@@ -1,9 +1,10 @@
 <?php
-namespace History;
-require_once "../templates/header2.php";
+namespace historial;
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
-use LoginUser\Database;
-use templates\header2;
+use templates\header;
+use templates\Footer;
+
 
 class Main {
     public function render() {
@@ -19,7 +20,9 @@ class Main {
           <!-- component -->
           
           <header> 
-            <?php $pageTitle = "Header"; include '../templates/header.php';?>
+            <?php $pageTitle = "Header"; 
+                $header = new header;
+                $header->head($pageTitle);?>
           </header>
           <div id="blog" class="bg-gray-100 px-16 xl:px-12 py-5 w-screen  flex justify-items-stretch">
             <div class=" w-max py-4">
@@ -121,7 +124,10 @@ class Main {
             </div>
           </div>
           <footer> 
-            <?php $pageTitle = "Footer"; include '../templates/footer.php';?>
+            <?php $pageTitle = "Footer"; 
+              $footer = new Footer;
+              $footer->Footer($pageTitle);
+            ?>
           </footer>
         </body>
         </html>

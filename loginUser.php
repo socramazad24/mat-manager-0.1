@@ -1,6 +1,7 @@
 <?php
-namespace LoginUser;
+namespace login;
 
+//require_once "vendor/autoload.php";
 require_once "con_db.php";
 use LoginUser\Database;
 class Login {

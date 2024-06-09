@@ -1,5 +1,5 @@
 <?php
-namespace DeleteUser;
+namespace CRUD;
 require_once "../templates/header2.php";
 require_once "../con_db.php";
 use LoginUser\Database;

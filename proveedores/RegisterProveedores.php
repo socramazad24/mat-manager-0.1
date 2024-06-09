@@ -1,13 +1,11 @@
 <?php
-namespace registerProvider;
-require_once "../templates/header2.php";
+namespace RegisterProveedores;
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
-require_once "../Auth.php";
-use Auth\AuthClass;
-$auth = new AuthClass();
-$auth->AuthF();
+//marcos
 use LoginUser\Database;
-use templates\header2;
+use templates\header;
+use templates\footer;
 
 class MainProvider {
     public function render() {
@@ -29,7 +27,10 @@ class MainProvider {
             </head>
             <body>
                 <header>
-                    <?php $pageTitle = "Header"; include '../templates/header.php';?>
+                    <?php $pageTitle = "Header"; 
+                        $header = new header;
+                        $header -> head($pageTitle);
+                    ?>
                 </header>
                 <div class="bg-gray-200 w-screen min-h-screen flex items-center justify-center">
                     <div class="w-full py-8">
@@ -172,7 +173,10 @@ class MainProvider {
                     mysqli_close($conex);
                 ?>
                 <footer> 
-                    <?php $pageTitle = "Footer"; include '../templates/footer.php';?>
+                    <?php $pageTitle = "Footer"; 
+                        $header = new Footer;
+                        $header-> Footer($pageTitle);
+                    ?>
                 </footer>
             </body>
             </html>

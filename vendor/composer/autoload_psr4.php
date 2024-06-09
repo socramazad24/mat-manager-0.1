@@ -6,8 +6,22 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'users\\' => array($baseDir . '/users'),
+    'templates\\' => array($baseDir . '/templates'),
+    'tables\\' => array($baseDir . '/tables'),
+    'proveedores\\' => array($baseDir . '/proveedores'),
+    'pedidos\\' => array($baseDir . '/pedidos'),
+    'matmanager\\templates\\' => array($baseDir . '/mat-manager/templates'),
+    'matmanager\\admin\\' => array($baseDir . '/mat-manager/admin'),
+    'matmanager\\CRUD\\' => array($baseDir . '/mat-manager/CRUD'),
+    'matmanager\\' => array($baseDir . '/matmanager'),
+    'materiales\\' => array($baseDir . '/materiales'),
+    'historial\\' => array($baseDir . '/historial'),
+    'gerente\\' => array($baseDir . '/gerente'),
+    'bodeguero\\' => array($baseDir . '/bodeguero'),
+    'admin\\' => array($baseDir . '/admin'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
-    'MiProyecto\\' => array($baseDir . '/mat-manager/composer dump-autoload'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'CRUD\\' => array($baseDir . '/CRUD'),
 );

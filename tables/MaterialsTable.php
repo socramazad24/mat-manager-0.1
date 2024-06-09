@@ -1,13 +1,11 @@
 <?php
-namespace MaterialTable;
-require_once "../templates/header2.php";
+namespace tables;
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
-require_once "../Auth.php";
-use Auth\AuthClass;
-$auth = new AuthClass();
-$auth->AuthF();
+//marcos
 use LoginUser\Database;
 use templates\header2;
+use templates\Footer;
 
 class MaterialsT {
     public function render() {
@@ -138,7 +136,10 @@ class MaterialsT {
             </div>
 
             <footer>
-                &copy; 2023 MAT-MANAGER
+            <?php $pageTitle = "Footer"; 
+                    $header = new Footer;
+                    $header-> Footer($pageTitle);
+                ?>
             </footer>
         </body>
         </html>

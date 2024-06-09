@@ -1,7 +1,7 @@
 <?php
 namespace Auth;
 class AuthClass {
-    public function AuthF() {
+    public static function AuthF() {
         ?>
         <?php
         // dashboard.php

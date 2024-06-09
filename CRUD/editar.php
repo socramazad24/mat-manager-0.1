@@ -1,5 +1,5 @@
 <?php
-namespace EditMaterial;
+namespace CRUD;
 require_once "../con_db.php";
 use LoginUser\Database;
 $db = new Database();

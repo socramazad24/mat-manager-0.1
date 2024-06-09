@@ -1,14 +1,11 @@
 <?php
-namespace index;
-require_once "../templates/header2.php";
+namespace admin;
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
 
-use LoginUser\Database;
-use templates\header2;
-require_once "../Auth.php";
-use Auth\AuthClass;
-$auth = new AuthClass();
-$auth->AuthF();
+use templates\header;
+use templates\footer;
+
 
 class Main {
     public function render() {
@@ -36,7 +33,10 @@ class Main {
         </head>
         <body class='bg-gray-100 h-max'>
         <header> 
-            <?php $pageTitle = "Header"; include '../templates/header.php';?>
+            <?php $pageTitle = "Header";                 
+                $header = new header();
+                $header-> head($pageTitle);
+            ;?>
         </header>
             <section class="text-gray-600 body-font">
                 <div class="container px-5 py-24 mx-auto">
@@ -84,7 +84,10 @@ class Main {
                 </div>
             </section>
             <footer> 
-            <?php $pageTitle = "Footer"; include '../templates/footer.php';?>
+            <?php $pageTitle = "Footer"; 
+                $footer = new footer();
+                $footer-> footer($pageTitle);
+            ?>
 
             </footer>
         </body>

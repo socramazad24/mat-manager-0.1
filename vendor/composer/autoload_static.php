@@ -12,29 +12,119 @@ class ComposerStaticInitf239d0dd1d4ea49378e7d87105f0bddb
     );
 
     public static $prefixLengthsPsr4 = array (
+        'u' => 
+        array (
+            'users\\' => 6,
+        ),
+        't' => 
+        array (
+            'templates\\' => 10,
+            'tables\\' => 7,
+        ),
+        'p' => 
+        array (
+            'proveedores\\' => 12,
+            'pedidos\\' => 8,
+        ),
+        'm' => 
+        array (
+            'matmanager\\templates\\' => 21,
+            'matmanager\\admin\\' => 17,
+            'matmanager\\CRUD\\' => 16,
+            'matmanager\\' => 11,
+            'materiales\\' => 11,
+        ),
+        'h' => 
+        array (
+            'historial\\' => 10,
+        ),
+        'g' => 
+        array (
+            'gerente\\' => 8,
+        ),
+        'b' => 
+        array (
+            'bodeguero\\' => 10,
+        ),
+        'a' => 
+        array (
+            'admin\\' => 6,
+        ),
         'P' => 
         array (
             'PhpParser\\' => 10,
-        ),
-        'M' => 
-        array (
-            'MiProyecto\\' => 11,
         ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
+        'C' => 
+        array (
+            'CRUD\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'users\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/users',
+        ),
+        'templates\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/templates',
+        ),
+        'tables\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tables',
+        ),
+        'proveedores\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/proveedores',
+        ),
+        'pedidos\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/pedidos',
+        ),
+        'matmanager\\templates\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/mat-manager/templates',
+        ),
+        'matmanager\\admin\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/mat-manager/admin',
+        ),
+        'matmanager\\CRUD\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/mat-manager/CRUD',
+        ),
+        'matmanager\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/matmanager',
+        ),
+        'materiales\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/materiales',
+        ),
+        'historial\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/historial',
+        ),
+        'gerente\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/gerente',
+        ),
+        'bodeguero\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/bodeguero',
+        ),
+        'admin\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/admin',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
-        ),
-        'MiProyecto\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/mat-manager/composer dump-autoload',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -43,6 +133,10 @@ class ComposerStaticInitf239d0dd1d4ea49378e7d87105f0bddb
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'CRUD\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/CRUD',
         ),
     );
 

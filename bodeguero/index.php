@@ -1,11 +1,7 @@
 <?php
-namespace index;
-require_once "../templates/header2.php";
+namespace bodeguero;
+require_once "../vendor/autoload.php";
 require_once "../con_db.php";
-require_once "../Auth.php";
-use Auth\AuthClass;
-$auth = new AuthClass();
-$auth->AuthF();
 use LoginUser\Database;
 use templates\header2;
 
