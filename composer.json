@@ -7,11 +7,15 @@
             "MiProyecto\\": "mat-manager/composer dump-autoload"
         }
     },
-    "require-dev": {
-        "phpunit/phpunit": "^11.1"
-    }
-
     
+        "require-dev": {
+            "phpunit/phpunit": "*",
+            "phpmetrics/phpmetrics": "^2.8.2"
+        }
+    
+
+       
+        
         
     
     

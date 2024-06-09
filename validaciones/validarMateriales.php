@@ -31,7 +31,7 @@
             <?php
             exit(); // Detener la ejecución si el nombre excede el límite de caracteres
         }
-        if(strlen($proovedor) > 50 ) {
+        if(strlen($idProveedor) > 50 ) {
             ?>
             <h3 class="bad">el nombre del proveedor excede el límite de caracteres permitido (50 caracteres).</h3>
             <?php

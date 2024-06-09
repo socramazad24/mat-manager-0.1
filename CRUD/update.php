@@ -1,20 +1,42 @@
 <?php
-    include_once("../con_db.php");
+namespace UpdateMaterial;
+require_once "../templates/header2.php";
+require_once "../con_db.php";
+use LoginUser\Database;
+use templates\header2;
 
-    
-    $idMaterial = $_POST["idMaterial"];
-    $MaterialName = $_POST['MaterialName'];
-    $Description = $_POST['Description'];
-    $costoUnitario = $_POST['costoUnitario'];
-    $cantidadMaterial =$_POST['cantidadMaterial'];
-    $proovedor = $_POST['proovedor'];                    
-    $datereg = date("y/m/d");
+class UpdateMaterialClass {
+    public function UpdateMaterialF() {
+        ?>
+        <?php
+            $db = new Database();
+            $conex = $db->getConnection();
 
-    $sentencia = $conex->prepare("UPDATE materiales SET MaterialName=?,Description=?,costoUnitario=?,cantidadMaterial=?,proovedor=?,date_reg=?
-    WHERE idMaterial=?");
+            
+            $idMaterial = $_POST["idMaterial"];
+            $MaterialName = $_POST['MaterialName'];
+            $Description = $_POST['Description'];
+            $costoUnitario = $_POST['costoUnitario'];
+            $cantidadMaterial =$_POST['cantidadMaterial'];
+            $idProveedor = $_POST['idProveedor'];                    
+            $datereg = date("y/m/d");
 
-    $sentencia->bind_param("ssiisss", $MaterialName ,$Description,$costoUnitario,$cantidadMaterial,$proovedor,$datereg,$idMaterial );
-    $sentencia->execute();
-    header("location: ../tables/MaterialsTable.php");
+            $sentencia = $conex->prepare("UPDATE materiales SET MaterialName=?,Description=?,costoUnitario=?,cantidadMaterial=?,idProveedor=?,date_reg=?
+            WHERE idMaterial=?");
 
+            $sentencia->bind_param("ssiisss", $MaterialName ,$Description,$costoUnitario,$cantidadMaterial,$idProveedor,$datereg,$idMaterial );
+            $sentencia->execute();
+            header("location: ../tables/MaterialsTable.php");
+
+        ?>
+        
+
+        
+        <?php
+    }
+}
+
+// Instanciamos la clase y llamamos al método render para generar el HTML
+$main = new UpdateMaterialClass();
+$main->UpdateMaterialF();
 ?>

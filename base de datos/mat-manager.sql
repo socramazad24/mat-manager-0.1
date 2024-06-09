@@ -34,7 +34,7 @@ CREATE TABLE `auditoriamateriales` (
   `description` varchar(30) NOT NULL,
   `costoUnitario` int(10) NOT NULL,
   `cantidadMaterial` int(10) NOT NULL,
-  `proovedor` varchar(15) NOT NULL,
+  `idProveedor` varchar(15) NOT NULL,
   `Action` varchar(15) NOT NULL,
   `date_reg` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -43,7 +43,7 @@ CREATE TABLE `auditoriamateriales` (
 -- Volcado de datos para la tabla `auditoriamateriales`
 --
 
-INSERT INTO `auditoriamateriales` (`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `proovedor`, `Action`, `date_reg`) VALUES
+INSERT INTO `auditoriamateriales` (`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `idProveedor`, `Action`, `date_reg`) VALUES
 ('R01876', 'N001', 'cemento', 'cemento secado rapido', 30000, 9, '', 'actualizado', '2023-11-22'),
 ('R09518', 'N001', 'cemento', 'cemento secado rapido', 30000, 10, 'argo', 'insertado', '2023-11-22'),
 ('R26097', 'N001', 'cemento', 'cemento secado rapido', 30000, 9, 'argo', 'actualizado', '2023-11-22'),
@@ -59,7 +59,7 @@ INSERT INTO `auditoriamateriales` (`idR_material`, `idMaterial`, `materialName`,
 CREATE TABLE `historialpedidos` (
   `idRegPedido` varchar(10) NOT NULL,
   `idPedido` varchar(10) NOT NULL,
-  `nameProovedor` varchar(20) NOT NULL,
+  `nameidProveedor` varchar(20) NOT NULL,
   `material` varchar(30) NOT NULL,
   `cantidad` int(10) NOT NULL,
   `precioUnitario` int(10) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `historialpedidos` (
 -- Volcado de datos para la tabla `historialpedidos`
 --
 
-INSERT INTO `historialpedidos` (`idRegPedido`, `idPedido`, `nameProovedor`, `material`, `cantidad`, `precioUnitario`, `accion`, `date_reg`) VALUES
+INSERT INTO `historialpedidos` (`idRegPedido`, `idPedido`, `nameidProveedor`, `material`, `cantidad`, `precioUnitario`, `accion`, `date_reg`) VALUES
 ('RP14851', 'P005 ', 'megamex', 'cobre', 100, 100000, 'agredado', '2024-05-02'),
 ('RP65029', 'P004 ', 'argo', 'CEMENTO', 30, 30000, 'eliminado', '2023-11-22'),
 ('RP95088', 'P002 ', 'cobre', 'cobre conductor', 10, 5000, 'eliminado', '2023-11-22');
@@ -145,7 +145,7 @@ CREATE TABLE `materiales` (
   `Description` varchar(30) NOT NULL,
   `costoUnitario` int(10) NOT NULL,
   `cantidadMaterial` int(10) NOT NULL,
-  `proovedor` varchar(15) NOT NULL,
+  `idProveedor` varchar(15) NOT NULL,
   `date_reg` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -153,25 +153,25 @@ CREATE TABLE `materiales` (
 -- Volcado de datos para la tabla `materiales`
 --
 
-INSERT INTO `materiales` (`idMaterial`, `MaterialName`, `Description`, `costoUnitario`, `cantidadMaterial`, `proovedor`, `date_reg`) VALUES
+INSERT INTO `materiales` (`idMaterial`, `MaterialName`, `Description`, `costoUnitario`, `cantidadMaterial`, `idProveedor`, `date_reg`) VALUES
 ('N001', 'cemento', 'cemento secado rapido', 30000, 15, 'argo', '2023-11-22');
 
 --
 -- Disparadores `materiales`
 --
 DELIMITER $$
-CREATE TRIGGER `TR_REG_MATERIALS` AFTER INSERT ON `materiales` FOR EACH ROW INSERT INTO `auditoriamateriales`(`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `proovedor`,`action`, `date_reg`)
- VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idMaterial,NEW.materialName,NEW.description,NEW.costoUnitario,NEW.cantidadMaterial,NEW.proovedor,'insertado',NEW.date_reg)
+CREATE TRIGGER `TR_REG_MATERIALS` AFTER INSERT ON `materiales` FOR EACH ROW INSERT INTO `auditoriamateriales`(`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `idProveedor`,`action`, `date_reg`)
+ VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idMaterial,NEW.materialName,NEW.description,NEW.costoUnitario,NEW.cantidadMaterial,NEW.idProveedor,'insertado',NEW.date_reg)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `TR_REG_MATERIALS_Delete` BEFORE DELETE ON `materiales` FOR EACH ROW INSERT INTO `auditoriamateriales`(`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `proovedor`,`action`, `date_reg`)
- VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),OLD.idMaterial,OLD.materialName,OLD.description,OLD.costoUnitario,OLD.cantidadMaterial,OLD.proovedor,'eliminado',OLD.date_reg)
+CREATE TRIGGER `TR_REG_MATERIALS_Delete` BEFORE DELETE ON `materiales` FOR EACH ROW INSERT INTO `auditoriamateriales`(`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `idProveedor`,`action`, `date_reg`)
+ VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),OLD.idMaterial,OLD.materialName,OLD.description,OLD.costoUnitario,OLD.cantidadMaterial,OLD.idProveedor,'eliminado',OLD.date_reg)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `TR_REG_MATERIALS_UPDATE` BEFORE UPDATE ON `materiales` FOR EACH ROW INSERT INTO `auditoriamateriales`(`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `proovedor`,`action`, `date_reg`)
- VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idMaterial,NEW.materialName,NEW.description,NEW.costoUnitario,NEW.cantidadMaterial,NEW.proovedor,'actualizado',NEW.date_reg)
+CREATE TRIGGER `TR_REG_MATERIALS_UPDATE` BEFORE UPDATE ON `materiales` FOR EACH ROW INSERT INTO `auditoriamateriales`(`idR_material`, `idMaterial`, `materialName`, `description`, `costoUnitario`, `cantidadMaterial`, `idProveedor`,`action`, `date_reg`)
+ VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idMaterial,NEW.materialName,NEW.description,NEW.costoUnitario,NEW.cantidadMaterial,NEW.idProveedor,'actualizado',NEW.date_reg)
 $$
 DELIMITER ;
 
@@ -203,25 +203,25 @@ INSERT INTO `pedidos` (`idPedido`, `nameProveedor`, `materiales`, `cantidad`, `c
 -- Disparadores `pedidos`
 --
 DELIMITER $$
-CREATE TRIGGER `TR_REG_PEDIDOS_DELETE` BEFORE DELETE ON `pedidos` FOR EACH ROW INSERT INTO `historialpedidos`(`idRegPedido`, `idPedido`, `nameProovedor`, `material`, `cantidad`, `precioUnitario`,`accion`, `date_reg`) VALUES (CONCAT('RP', LPAD(FLOOR(RAND() * 100000), 5, '0')),OLD.idPedido,OLD.nameProveedor,OLD.materiales,OLD.cantidad,OLD.costoUnitario,'eliminado',OLD.fecha_reg)
+CREATE TRIGGER `TR_REG_PEDIDOS_DELETE` BEFORE DELETE ON `pedidos` FOR EACH ROW INSERT INTO `historialpedidos`(`idRegPedido`, `idPedido`, `nameidProveedor`, `material`, `cantidad`, `precioUnitario`,`accion`, `date_reg`) VALUES (CONCAT('RP', LPAD(FLOOR(RAND() * 100000), 5, '0')),OLD.idPedido,OLD.nameProveedor,OLD.materiales,OLD.cantidad,OLD.costoUnitario,'eliminado',OLD.fecha_reg)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `TR_REG_PEDIDOS_INSERT` AFTER INSERT ON `pedidos` FOR EACH ROW INSERT INTO `historialpedidos`(`idRegPedido`, `idPedido`, `nameProovedor`, `material`, `cantidad`, `precioUnitario`,`accion`, `date_reg`) VALUES (CONCAT('RP', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idPedido,NEW.nameProveedor,NEW.materiales,NEW.cantidad,NEW.costoUnitario,'agredado',NEW.fecha_reg)
+CREATE TRIGGER `TR_REG_PEDIDOS_INSERT` AFTER INSERT ON `pedidos` FOR EACH ROW INSERT INTO `historialpedidos`(`idRegPedido`, `idPedido`, `nameidProveedor`, `material`, `cantidad`, `precioUnitario`,`accion`, `date_reg`) VALUES (CONCAT('RP', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idPedido,NEW.nameProveedor,NEW.materiales,NEW.cantidad,NEW.costoUnitario,'agredado',NEW.fecha_reg)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `TR_REG_PEDIDOS_UPDATE` BEFORE UPDATE ON `pedidos` FOR EACH ROW INSERT INTO `historialpedidos`(`idRegPedido`, `idPedido`, `nameProovedor`, `material`, `cantidad`, `precioUnitario`,`accion`, `date_reg`) VALUES (CONCAT('RP', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idPedido,NEW.nameProveedor,NEW.materiales,NEW.cantidad,NEW.costoUnitario,'actualizado',EW.fecha_reg)
+CREATE TRIGGER `TR_REG_PEDIDOS_UPDATE` BEFORE UPDATE ON `pedidos` FOR EACH ROW INSERT INTO `historialpedidos`(`idRegPedido`, `idPedido`, `nameidProveedor`, `material`, `cantidad`, `precioUnitario`,`accion`, `date_reg`) VALUES (CONCAT('RP', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idPedido,NEW.nameProveedor,NEW.materiales,NEW.cantidad,NEW.costoUnitario,'actualizado',EW.fecha_reg)
 $$
 DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `proovedores`
+-- Estructura de tabla para la tabla `idProveedores`
 --
 
-CREATE TABLE `proovedores` (
+CREATE TABLE `idProveedores` (
   `idProveedor` varchar(10) NOT NULL,
   `nameProveedor` varchar(20) NOT NULL,
   `materiales` varchar(50) NOT NULL,
@@ -232,30 +232,30 @@ CREATE TABLE `proovedores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `proovedores`
+-- Volcado de datos para la tabla `idProveedores`
 --
 
-INSERT INTO `proovedores` (`idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `date_reg`) VALUES
+INSERT INTO `idProveedores` (`idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `date_reg`) VALUES
 ('PR001', 'argox', 'cemento', 32314, 'argox@argox.com', 'mareigua', '2024-05-01'),
 ('PR0011', 'metro', 'cemento', 3231411, 'argox@argox.com', 'mareigua', '2024-05-07'),
 ('PR002', 'metro', 'cobre', 3231411, 'metro@metro.com', 'la paz', '2024-05-01'),
 ('PR003', 'matro', 'hierro', 3231411, 'metro@metro.com', 'la paz', '2024-05-01');
 
 --
--- Disparadores `proovedores`
+-- Disparadores `idProveedores`
 --
 DELIMITER $$
-CREATE TRIGGER `RG_DELETE_PROVEEDOR` BEFORE DELETE ON `proovedores` FOR EACH ROW INSERT INTO `historialproveedores`(`idRegProveedor`, `idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `accion`, `date_reg`) 
+CREATE TRIGGER `RG_DELETE_PROVEEDOR` BEFORE DELETE ON `idProveedores` FOR EACH ROW INSERT INTO `historialproveedores`(`idRegProveedor`, `idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `accion`, `date_reg`) 
 VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),OLD.idProveedor,OLD.nameProveedor,OLD.materiales,OLD.telefono,OLD.correo,OLD.direccion,'eliminado',OLD.date_reg)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `RG_REGISTRO_PROVEEDOR` AFTER INSERT ON `proovedores` FOR EACH ROW INSERT INTO `historialproveedores`(`idRegProveedor`, `idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `accion`, `date_reg`) 
+CREATE TRIGGER `RG_REGISTRO_PROVEEDOR` AFTER INSERT ON `idProveedores` FOR EACH ROW INSERT INTO `historialproveedores`(`idRegProveedor`, `idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `accion`, `date_reg`) 
 VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idProveedor,NEW.nameProveedor,NEW.materiales,NEW.telefono,NEW.correo,NEW.direccion,'agregado',NEW.date_reg)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `RG_UPDATE_PROVEEDOR` BEFORE UPDATE ON `proovedores` FOR EACH ROW INSERT INTO `historialproveedores`(`idRegProveedor`, `idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `accion`, `date_reg`) 
+CREATE TRIGGER `RG_UPDATE_PROVEEDOR` BEFORE UPDATE ON `idProveedores` FOR EACH ROW INSERT INTO `historialproveedores`(`idRegProveedor`, `idProveedor`, `nameProveedor`, `materiales`, `telefono`, `correo`, `direccion`, `accion`, `date_reg`) 
 VALUES (CONCAT('R', LPAD(FLOOR(RAND() * 100000), 5, '0')),NEW.idProveedor,NEW.nameProveedor,NEW.materiales,NEW.telefono,NEW.correo,NEW.direccion,'actualizado',NEW.date_reg)
 $$
 DELIMITER ;
@@ -339,9 +339,9 @@ ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`idPedido`);
 
 --
--- Indices de la tabla `proovedores`
+-- Indices de la tabla `idProveedores`
 --
-ALTER TABLE `proovedores`
+ALTER TABLE `idProveedores`
   ADD PRIMARY KEY (`idProveedor`);
 
 --
