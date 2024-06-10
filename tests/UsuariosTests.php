@@ -46,9 +46,7 @@ class UsuariosTests extends TestCase {
             'role' => 'admin'
         ];
 
-        ob_start();
-        $this->users->processRegistration();
-        $output = ob_get_clean();
+        $output = $this->users->processRegistration();
 
         $this->assertStringContainsString('Por favor, complete todos los campos', $output);
     }

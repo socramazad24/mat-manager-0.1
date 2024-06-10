@@ -86,13 +86,13 @@ class Users {
             $resultado = mysqli_query($conn, $consulta);
 
             if($resultado){
-                echo "<script>Swal.fire({
+                return "<script>Swal.fire({
                     icon: 'success',
                     title: 'Éxito',
                     text: 'Usuario registrado con éxito',
                 })</script>";
             } else {
-                echo "<script>Swal.fire({
+                return "<script>Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: 'Error al registrar el usuario',
