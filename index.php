@@ -17,7 +17,7 @@ class Main {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>MAT-MANAGER</title>
                 <link rel="stylesheet" href="styles/style.css">
-                <script src="https://cdn.tailwindcss.com"></script>
+                <script src="tailwind.js" integrity="sha384-pXbtEM0s3abRFqEyAChS+PGW3VqbeR/BWCGz6yIMx1rq9ZyeEtJhfCHyPSUpD3XF" crossorigin="anonymous"></script>
                 <script>
                     tailwind.config = {
                         theme: {

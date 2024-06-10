@@ -116,7 +116,7 @@ class UsersForm {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <script src="https://cdn.tailwindcss.com"></script>
+            <script src="../tailwind.js" integrity="sha384-pXbtEM0s3abRFqEyAChS+PGW3VqbeR/BWCGz6yIMx1rq9ZyeEtJhfCHyPSUpD3XF" crossorigin="anonymous"></script>
             <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
             <!-- SweetAlert2 CSS -->
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">

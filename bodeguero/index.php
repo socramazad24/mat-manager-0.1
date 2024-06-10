@@ -16,7 +16,7 @@ class Main {
             <title>Inicio</title>
             <link rel="stylesheet" href="../styles/style.css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css">
-            <script src="https://cdn.tailwindcss.com"></script>
+            <script src="../tailwind.js" integrity="sha384-pXbtEM0s3abRFqEyAChS+PGW3VqbeR/BWCGz6yIMx1rq9ZyeEtJhfCHyPSUpD3XF" crossorigin="anonymous"></script>
             <script>
                 function filterMaterials() {
                     const searchValue = document.getElementById('search').value.toLowerCase();
