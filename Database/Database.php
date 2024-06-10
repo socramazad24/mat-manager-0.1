@@ -1,5 +1,5 @@
 <?php
-namespace LoginUser;
+namespace Database;
 
 class Database {
     private $conex;

@@ -69,7 +69,7 @@ class Main {
                 </div>
                 
                 <div class="flex items-center mb-5">
-                    <a href="../users/register.php" class="inline-block text-xl font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl duration-300 text-light-inverse bg-light-dark border-light shadow-none py-2 px-5 hover:bg-amber-400 hover:text-white active:bg-light focus:bg-light ml-3">Registrar Usuario</a>
+                    <a href="../users/users.php" class="inline-block text-xl font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl duration-300 text-light-inverse bg-light-dark border-light shadow-none py-2 px-5 hover:bg-amber-400 hover:text-white active:bg-light focus:bg-light ml-3">Registrar Usuario</a>
                     <div class="flex">
                         <input type="text" id="search" placeholder="Buscar usuarios" onkeyup="filterUsers()" class="border rounded-lg py-2 px-4 ml-10">
                     </div>

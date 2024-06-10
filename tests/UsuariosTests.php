@@ -1,42 +1,76 @@
 <?php
+// tests/UsersTest.php
+
 use PHPUnit\Framework\TestCase;
+use users\Users;
 
+class UsuariosTests extends TestCase {
+    protected $users;
 
-include_once ('../src/pruebaUsuarios.php'); // Reemplaza con la ruta correcta
-
-class RegistroUsuarioTest extends TestCase {
-    private $op;
-    public function setup(): void
-    {
-        $this->op = new UsersTests();
-    }
-    // Prueba para verificar el registro de usuario exitoso
-    public function testRegistroUsuarioExitoso() {
-        $conexionMock = $this->createMock(mysqli::class);
-        $conexionMock->method('query')->willReturn(true);
-
-        $mensaje = registrarUsuario('123', 'John', 'Doe', 'johndoe', '1234', 'john@example.com', '123456789', 'administrador', $conexionMock);
-
-        $this->assertEquals('te has registrado exitosamente', $mensaje);
+    protected function setUp(): void {
+        $this->users = new Users();
     }
 
-    // Prueba para verificar si el usuario ya existe
-    public function testUsuarioExistente() {
-        $conexionMock = $this->createMock(mysqli::class);
-        $conexionMock->method('query')->willReturn(true);
+    public function testPasswordConfirmationDoesNotMatch() {
+        $_POST = [
+            'register' => true,
+            'idEmployee' => '12345',
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'username' => 'johndoe',
+            'password' => 'password123',
+            'password_confirmation' => 'password456',
+            'email' => 'john@example.com',
+            'phone' => '1234567890',
+            'role' => 'admin'
+        ];
 
-        $mensaje = registrarUsuario('123', 'John', 'Doe', 'usuario_existente', 'contraseña', 'john@example.com', '123456789', 'administrador', $conexionMock);
+        ob_start();
+        $this->users->processRegistration();
+        $output = ob_get_clean();
 
-        $this->assertEquals('El usuario ya existe. Por favor, elige otro nombre de usuario.', $mensaje);
+        $this->assertStringContainsString('Las contraseñas no coinciden', $output);
     }
 
-    // Prueba para verificar el caso de campos faltantes
-    public function testCamposFaltantes() {
-        $conexionMock = $this->createMock(mysqli::class);
+    public function testRequiredFieldsMissing() {
+        $_POST = [
+            'register' => true,
+            'idEmployee' => '',
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'username' => 'johndoe',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'email' => 'john@example.com',
+            'phone' => '1234567890',
+            'role' => 'admin'
+        ];
 
-        $mensaje = registrarUsuario('', '', '', '', '', '', '', '', $conexionMock);
+        ob_start();
+        $this->users->processRegistration();
+        $output = ob_get_clean();
 
-        $this->assertEquals('llene todos los campos', $mensaje);
+        $this->assertStringContainsString('Por favor, complete todos los campos', $output);
+    }
+
+    public function testInvalidEmailFormat() {
+        $_POST = [
+            'register' => true,
+            'idEmployee' => '12345',
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'username' => 'johndoe',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'email' => 'invalid-email',
+            'phone' => '1234567890',
+            'role' => 'admin'
+        ];
+
+        ob_start();
+        $this->users->processRegistration();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('Formato de correo electrónico no válido', $output);
     }
 }
-?>

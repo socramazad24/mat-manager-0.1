@@ -1,5 +1,5 @@
 {
-    "autoload": {
+    "autoload-dev": {
         "classmap": [
             "src/"
         ],
@@ -19,12 +19,15 @@
             "proveedores\\": "proveedores/",
             "tables\\": "tables/",
             "users\\": "users/",
-            "matmanager\\": "matmanager/"
+            "matmanager\\": "matmanager/",
+            "tests\\": "tests/",
+            "Database\\": "Database/"
+
         }
     },
     
         "require-dev": {
-            "phpunit/phpunit": "*",
+            "phpunit/phpunit": "^9.5",
             "phpmetrics/phpmetrics": "^2.8.2"
         }
     

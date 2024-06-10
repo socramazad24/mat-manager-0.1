@@ -1,46 +1,95 @@
 <?php
-// tests/UserRegistrationTest.php
 
 use PHPUnit\Framework\TestCase;
+use users\users;
+use Database\Database;
 
-require_once 'user_registration.php';
-
-class UserRegistrationTest extends TestCase
+class TestUser extends TestCase
 {
-    // Simulamos una conexión ficticia
-    private $conex;
+    private $registerUser;
+    private $dbMock;
 
-    // Método que se ejecuta antes de cada prueba
     protected function setUp(): void
     {
-        $this->conex = $this->createMock(mysqli::class);
+        // Crear un mock de la clase Database
+        $this->dbMock = $this->createMock(Database::class);
+        
+        // Crear una instancia de la clase RegisterUserClass
+        $this->registerUser = new users();
     }
 
-    public function testRegisterUserSuccess()
+    public function testRegisterUserWithValidData()
     {
-        // Configurar el objeto de conexión ficticia para devolver un resultado ficticio
-        $this->conex->method('query')
-            ->willReturn(true);
+        $_POST = [
+            'idEmployee' => '123456',
+            'firstName' => 'Juan',
+            'lastName' => 'Pérez',
+            'username' => 'juanperez',
+            'password' => 'securepassword',
+            'password_confirmation' => 'securepassword',
+            'email' => 'juan@example.com',
+            'phone' => '1234567890',
+            'role' => 'administrador'
+        ];
 
-        $userRegistration = new UserRegistration($this->conex);
-        $result = $userRegistration->registerUser('1', 'John', 'Doe', 'johndoe', 'password', 'john@example.com', '123456789', 'administrador');
+        // Simular el método insertar
+        $this->dbMock->expects($this->once())
+                     ->method('query')
+                     ->with($this->stringContains("INSERT INTO users"))
+                     ->willReturn(true);
 
-        $this->assertEquals('te has registrado exitosamente', $result);
+        // Capturar la salida
+        ob_start();
+        $this->registerUser->processRegistration();
+        $output = ob_get_clean();
+        
+        // Verificar que la salida contiene el mensaje de éxito
+        $this->assertStringContainsString('Te has registrado exitosamente.', $output);
     }
 
-    public function testRegisterUserAlreadyExists()
+    public function testRegisterUserWithEmptyFields()
     {
-        // Configurar el objeto de conexión ficticia para devolver un resultado ficticio
-        $this->conex->method('query')
-            ->willReturn($this->createMock(mysqli_result::class));
+        $_POST = [
+            'idEmployee' => '',
+            'firstName' => '',
+            'lastName' => '',
+            'username' => '',
+            'password' => '',
+            'password_confirmation' => '',
+            'email' => '',
+            'phone' => '',
+            'role' => ''
+        ];
 
-        $userRegistration = new UserRegistration($this->conex);
-        $result = $userRegistration->registerUser('1', 'John', 'Doe', 'johndoe', 'password', 'john@example.com', '123456789', 'administrador');
+        // Capturar la salida
+        ob_start();
+        $this->registerUser->RegisterUserF();
+        $output = ob_get_clean();
 
-        $this->assertEquals('El usuario ya existe. Por favor, elige otro nombre de usuario.', $result);
+        // Verificar que la salida contiene el mensaje de error
+        $this->assertStringContainsString('Por favor, complete todos los campos.', $output);
     }
 
-    // Puedes escribir más pruebas para cubrir otros casos
+    public function testRegisterUserWithInvalidEmail()
+    {
+        $_POST = [
+            'idEmployee' => '123456',
+            'firstName' => 'Juan',
+            'lastName' => 'Pérez',
+            'username' => 'juanperez',
+            'password' => 'securepassword',
+            'password_confirmation' => 'securepassword',
+            'email' => 'invalidemail',
+            'phone' => '1234567890',
+            'role' => 'administrador'
+        ];
+
+        // Capturar la salida
+        ob_start();
+        $this->registerUser->RegisterUserF();
+        $output = ob_get_clean();
+
+        // Verificar que la salida contiene el mensaje de error
+        $this->assertStringContainsString('Por favor, introduzca un correo electrónico válido.', $output);
+    }
 }
-
-?>

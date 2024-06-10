@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'users\\' => array($baseDir . '/users'),
+    'tests\\' => array($baseDir . '/tests'),
     'templates\\' => array($baseDir . '/templates'),
     'tables\\' => array($baseDir . '/tables'),
     'proveedores\\' => array($baseDir . '/proveedores'),
@@ -23,5 +24,6 @@ return array(
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'Database\\' => array($baseDir . '/Database'),
     'CRUD\\' => array($baseDir . '/CRUD'),
 );

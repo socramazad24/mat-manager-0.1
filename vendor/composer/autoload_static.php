@@ -18,6 +18,7 @@ class ComposerStaticInitf239d0dd1d4ea49378e7d87105f0bddb
         ),
         't' => 
         array (
+            'tests\\' => 6,
             'templates\\' => 10,
             'tables\\' => 7,
         ),
@@ -58,6 +59,7 @@ class ComposerStaticInitf239d0dd1d4ea49378e7d87105f0bddb
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
+            'Database\\' => 9,
         ),
         'C' => 
         array (
@@ -69,6 +71,10 @@ class ComposerStaticInitf239d0dd1d4ea49378e7d87105f0bddb
         'users\\' => 
         array (
             0 => __DIR__ . '/../..' . '/users',
+        ),
+        'tests\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
         ),
         'templates\\' => 
         array (
@@ -133,6 +139,10 @@ class ComposerStaticInitf239d0dd1d4ea49378e7d87105f0bddb
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'Database\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Database',
         ),
         'CRUD\\' => 
         array (
