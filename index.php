@@ -2,8 +2,8 @@
 namespace matmanager;
 //require_once "vendor/autoload.php";
 //require_once "../templates/header2.php";
-//require_once "../con_db.php";
-//use LoginUser\Database;
+//require_once "../Database.php";
+//use matmanager\Database;
 //$db = new Database();
 //$conex = $db->getConnection();
 

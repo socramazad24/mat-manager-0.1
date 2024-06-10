@@ -1,6 +1,6 @@
 <?php
-namespace LoginUser;
-
+namespace matmanager;
+//session_start();
 class Database {
     private $conex;
     

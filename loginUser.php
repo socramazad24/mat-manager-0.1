@@ -1,9 +1,9 @@
 <?php
 namespace login;
-
+session_start();
 //require_once "vendor/autoload.php";
-require_once "con_db.php";
-use LoginUser\Database;
+require_once "Database.php";
+use matmanager\Database;
 class Login {
     private $conex;
 
@@ -27,22 +27,30 @@ class Login {
             $registro = mysqli_fetch_assoc($result);
             $rol = $registro['role'];
 
-            if ($result->num_rows == 1) {
-                $_SESSION['username'] = $username;
-                if ($rol == 'administrador') {
-                    header('Location: admin/index.php');
-                    exit();
-                } elseif ($rol == 'gerente') {
-                    header('Location: gerente/index.php');
-                    exit();
-                } elseif ($rol == 'bodeguero') {
-                    header('Location: bodeguero/index.php');
-                    exit();
-                } 
+            if ($result->num_rows == 1 ) {
+                $user = mysqli_fetch_assoc($result);
+                $_SESSION['username'] = $user['username'];
+                $rol = $registro['role'];
+                switch ($rol) {
+                    case 'administrador':
+                        header('Location: admin/index.php');
+                        exit();
+                    case 'gerente':
+                        header('Location: gerente/index.php');
+                        exit();
+                    case 'bodeguero':
+                        header('Location: bodeguero/index.php');
+                        exit();
+                    default:
+                        echo '<script>alert("Rol no válido");</script>';
+                        header('Location: index.php');
+                        exit();
+                }
             } else {
                 // Las credenciales son inválidas
                 echo '<script>alert("Credenciales incorrectas");</script>';
                 header('Location: index.php');
+                exit();
             }
         }
         $this->conex->close();

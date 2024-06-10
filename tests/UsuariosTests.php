@@ -2,13 +2,16 @@
 // tests/UsersTest.php
 
 use PHPUnit\Framework\TestCase;
-use users\Users;
+use users\users;
+use materiales\materiales;
 
 class UsuariosTests extends TestCase {
     protected $users;
+    protected $materials;
 
     protected function setUp(): void {
-        $this->users = new Users();
+        $this->users = new users();
+        $this->materials = new materiales();
     }
 
     public function testPasswordConfirmationDoesNotMatch() {
@@ -71,4 +74,6 @@ class UsuariosTests extends TestCase {
 
         $this->assertStringContainsString('Formato de correo electrónico no válido', $output);
     }
+
+    
 }

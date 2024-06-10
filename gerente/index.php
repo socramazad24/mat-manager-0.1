@@ -1,9 +1,11 @@
 <?php
 namespace gerente;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
-use LoginUser\Database;
-use templates\header2;
+require_once "../Database.php";
+//require_once "../Auth.php";
+use matmanager\Database;
+use templates\header3;
+use templates\Footer;
 $db = new Database();
 $conex = $db->getConnection();
 
@@ -20,10 +22,20 @@ class Main {
         </head>
         <body>
             <header> 
-                <?php $pageTitle = "Header"; include '../templates/header3.php';?>
+                <?php $pageTitle = "Header"; 
+                    $header = new header3;
+                    $header -> head3($pageTitle);
+                ?>
             </header>
 
         </body>
+
+        <footer>
+        <?php $pageTitle = "Footer"; 
+                    $Footer = new Footer;
+                    $Footer -> footer($pageTitle);
+                ?>
+        </footer>
 
         </html>
         </html>

@@ -1,8 +1,9 @@
 <?php
 namespace bodeguero;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
-use LoginUser\Database;
+require_once "../Database.php";
+//require_once "../Auth.php";
+use matmanager\Database;
 use templates\header2;
 
 class Main {

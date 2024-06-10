@@ -1,9 +1,9 @@
 <?php
 namespace tables;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
-//marcos
-use LoginUser\Database;
+require_once "../Database.php";
+//require_once "../Auth.php";
+use matmanager\Database;
 use templates\header2;
 use templates\Footer;
 
@@ -48,6 +48,27 @@ class MaterialsT {
                         }
                     });
                 }
+
+                function checkLowStock() {
+                    const threshold = 50; // Umbral definido
+                    const materials = document.getElementsByClassName('material-card');
+                    let lowStockMaterials = [];
+                    
+                    Array.from(materials).forEach(function(material) {
+                        const materialName = material.getElementsByClassName('material-name')[0].textContent;
+                        const materialQuantity = parseInt(material.getElementsByClassName('material-quantity')[0].textContent);
+                        
+                        if (materialQuantity < threshold) {
+                            lowStockMaterials.push(`${materialName}: ${materialQuantity}`);
+                        }
+                    });
+
+                    if (lowStockMaterials.length > 0) {
+                        alert("Materiales con bajo stock:\n" + lowStockMaterials.join("\n"));
+                    } else {
+                        alert("Todos los materiales están por encima del umbral de stock.");
+                    }
+                }
             </script>
         </head>
         <body>
@@ -75,6 +96,9 @@ class MaterialsT {
                             class="inline-block ml-4 text-xl font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl duration-300 text-light-inverse bg-dark/80 border-light shadow-none py-2 px-5 hover:bg-secondary active:bg-light focus:bg-light">
                             Registrar Material
                             </a>
+                            <button onclick="checkLowStock()" class="ml-4 text-xl font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl duration-300 text-light-inverse bg-dark/80 border-light shadow-none py-2 px-5 hover:bg-secondary active:bg-light focus:bg-light">
+                            Verificar Stock Bajo
+                            </button>
                         </div>
                     </div>
 
@@ -109,7 +133,7 @@ class MaterialsT {
                                 echo '      <p class="material-provider rounded-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-600">' . $row["idProveedor"] . '</p>';
                                 echo '    </div>';
                                 echo '    <div class="my-4 flex items-center justify-between px-4">';
-                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Proveedor</p>';
+                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Pedido</p>';
                                 echo '      <p class="material-provider rounded-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-600">' . $row["idPedido"] . '</p>';
                                 echo '    </div>';
                                 echo '    <div class="my-4 flex items-center justify-between px-4">';

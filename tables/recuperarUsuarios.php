@@ -1,9 +1,9 @@
 <?php
 namespace tables;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
-//marcos
-use LoginUser\Database;
+require_once "../Database.php";
+//require_once "../Auth.php";
+use matmanager\Database;
 use templates\header;
 use templates\Footer;
 

@@ -1,8 +1,8 @@
 <?php
 namespace CRUD;
 require_once "../templates/header2.php";
-require_once "../con_db.php";
-use LoginUser\Database;
+require_once "../Database.php";
+use matmanager\Database;
 use templates\header2;
 $db = new Database();
 $conex = $db->getConnection();

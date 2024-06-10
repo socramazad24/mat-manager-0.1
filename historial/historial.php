@@ -1,7 +1,7 @@
 <?php
 namespace historial;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
+require_once "../Database.php";
 use templates\header;
 use templates\Footer;
 

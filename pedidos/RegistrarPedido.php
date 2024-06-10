@@ -1,9 +1,9 @@
 <?php
 namespace pedidos;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
-//marcos
-use LoginUser\Database;
+require_once "../Database.php";
+//require_once "../Auth.php";
+use matmanager\Database;
 use templates\Footer;
 use templates\header3;
 
@@ -86,43 +86,7 @@ class Order {
                             <div class="my-4 flex items-center justify-end space-x-4">
                                 <button class="bg-amber-400 hover:bg-yellow-600 rounded-lg px-8 py-2 text-gray-100 hover:shadow-xl transition duration-150 uppercase" type="submit" name="register">Registrar</button>
                             </div>
-                        </form>
-                        <?php 
-                            $db = new Database();
-                            $conex = $db->getConnection();
-
-                            if (isset($_POST['register'])){
-                                if (
-                                strlen($_POST['idPedido']) >= 1 &&
-                                strlen($_POST['idProveedor']) >= 1 &&
-                                strlen($_POST['MaterialName']) >= 1 &&
-                                strlen($_POST['Description']) >= 1 &&
-                                strlen($_POST['cantidadMaterial']) >= 1 &&
-                                strlen($_POST['costoUnitario']) >= 1
-                                ) {
-                                    $idPedido = trim($_POST['idPedido']);
-                                    $idProveedor = trim($_POST['idProveedor']);
-                                    $material = trim($_POST['MaterialName']);
-                                    $descripcion = trim($_POST['Description']);
-                                    $cantidad = trim($_POST['cantidadMaterial']);
-                                    $costoUnitario = trim($_POST['costoUnitario']); 
-                                    $Estado = 'Pendiente';                   
-                                    $datereg = date("y-m-d");
-                                    //include("../validaciones/validarPedidos.php");
-                                    $consulta = "INSERT INTO `pedidos`(`idPedido`, `idProveedor`, `MaterialName`, `Description`, `cantidadMaterial`, `costoUnitario`, `Estado`, `fecha_reg`) 
-                                    VALUES ('$idPedido ','$idProveedor','$material','$descripcion','$cantidad','$costoUnitario','$Estado','$datereg')";
-                                    
-                                    $resultado = mysqli_query($conex, $consulta);
-                                    if ($resultado){
-                                        echo "<script>Swal.fire({icon: 'success',title: 'Éxito',text: 'Pedido registrado exitosamente.'});</script>";
-                                    } else {
-                                        echo "<script>Swal.fire({icon: 'error',title: 'Error',text: 'Algo ha salido mal.'});</script>";
-                                    }
-                                } else {
-                                    echo "<script>Swal.fire({icon: 'error',title: 'Error',text: 'Llene todos los campos.'});</script>";
-                                }
-                            }
-                        ?>
+                        </form>                        
                     </div>
                 </div>
             </div>
@@ -138,9 +102,51 @@ class Order {
     }
 }
 
+class RegistrarPedido{
+    function RegisterPedido() {
+         
+        $db = new Database();
+        $conex = $db->getConnection();
+
+        if (isset($_POST['register'])){
+            if (
+                strlen($_POST['idPedido']) >= 1 &&
+                strlen($_POST['idProveedor']) >= 1 &&
+                strlen($_POST['MaterialName']) >= 1 &&
+                strlen($_POST['Description']) >= 1 &&
+                strlen($_POST['cantidadMaterial']) >= 1 &&
+                strlen($_POST['costoUnitario']) >= 1
+                ) {
+                    $idPedido = trim($_POST['idPedido']);
+                    $idProveedor = trim($_POST['idProveedor']);
+                    $material = trim($_POST['MaterialName']);
+                    $descripcion = trim($_POST['Description']);
+                    $cantidad = trim($_POST['cantidadMaterial']);
+                    $costoUnitario = trim($_POST['costoUnitario']); 
+                    $Estado = 'Pendiente';                   
+                    $datereg = date("y-m-d");
+                    //include("../validaciones/validarPedidos.php");
+                    $consulta = "INSERT INTO `pedidos`(`idPedido`, `idProveedor`, `MaterialName`, `Description`, `cantidadMaterial`, `costoUnitario`, `Estado`, `fecha_reg`) 
+                    VALUES ('$idPedido ','$idProveedor','$material','$descripcion','$cantidad','$costoUnitario','$Estado','$datereg')";
+                    
+                    $resultado = mysqli_query($conex, $consulta);
+                    if ($resultado){
+                                        echo "<script>Swal.fire({icon: 'success',title: 'Éxito',text: 'Pedido registrado exitosamente.'});</script>";
+                    } else {
+                        echo "<script>Swal.fire({icon: 'error',title: 'Error',text: 'Algo ha salido mal.'});</script>";
+                    }
+                } else {
+                    echo "<script>Swal.fire({icon: 'error',title: 'Error',text: 'Llene todos los campos.'});</script>";
+                }
+            }
+                        
+    }
+}
 // Instanciamos la clase y llamamos al método render para generar el HTML
 $main = new Order();
 $main->render();
+$register = new RegistrarPedido;
+$register -> RegisterPedido();
 ?>
 
 

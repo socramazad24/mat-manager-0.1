@@ -28,7 +28,7 @@ Total : 40 files,  3727 codes, 153 comments, 420 blanks, all 4300 lines
 | [ALL/bodeguero/index.php](/ALL/bodeguero/index.php) | PHP | 29 | 0 | 0 | 29 |
 | [ALL/composer.json](/ALL/composer.json) | JSON | 10 | 0 | 1 | 11 |
 | [ALL/composer.lock](/ALL/composer.lock) | JSON | 1,650 | 0 | 1 | 1,651 |
-| [ALL/con_db.php](/ALL/con_db.php) | PHP | 3 | 0 | 1 | 4 |
+| [ALL/Database](/ALL/Database) | PHP | 3 | 0 | 1 | 4 |
 | [ALL/gerente/index.php](/ALL/gerente/index.php) | PHP | 29 | 0 | 6 | 35 |
 | [ALL/historial/historial.php](/ALL/historial/historial.php) | PHP | 13 | 0 | 7 | 20 |
 | [ALL/historial/historialMateriales.php](/ALL/historial/historialMateriales.php) | PHP | 110 | 4 | 18 | 132 |

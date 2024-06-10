@@ -1,8 +1,8 @@
 <?php
 namespace historial;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
-use LoginUser\Database;
+require_once "../Database.php";
+use matmanager\Database;
 use templates\header;
 use templates\Footer;
 

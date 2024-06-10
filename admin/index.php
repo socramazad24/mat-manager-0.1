@@ -1,7 +1,8 @@
 <?php
 namespace admin;
 require_once "../vendor/autoload.php";
-require_once "../con_db.php";
+require_once "../Database.php";
+//require_once "../Auth.php";
 
 use templates\header;
 use templates\footer;
