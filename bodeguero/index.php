@@ -1,8 +1,10 @@
 <?php
 namespace bodeguero;
+
 require_once "../vendor/autoload.php";
 require_once "../Database.php";
 //require_once "../Auth.php";
+
 use matmanager\Database;
 use templates\header2;
 
@@ -23,40 +25,32 @@ class Main {
                     const searchValue = document.getElementById('search').value.toLowerCase();
                     const materials = document.getElementsByClassName('material-card');
                     Array.from(materials).forEach(function(material) {
-                        const materialName = material.getElementsByClassName('material-name')[0].textContent.toLowerCase();
-                        const materialDescription = material.getElementsByClassName('material-description')[0].textContent.toLowerCase();
-                        const materialID = material.getElementsByClassName('material-id')[0].textContent.toLowerCase();
-                        const materialCost = material.getElementsByClassName('material-cost')[0].textContent.toLowerCase();
-                        const materialQuantity = material.getElementsByClassName('material-quantity')[0].textContent.toLowerCase();
-                        const materialProvider = material.getElementsByClassName('material-provider')[0].textContent.toLowerCase();
-                        const materialDate = material.getElementsByClassName('material-date')[0].textContent.toLowerCase();
-                        
-                        if (
-                            materialName.includes(searchValue) || 
-                            materialDescription.includes(searchValue) ||
-                            materialID.includes(searchValue) ||
-                            materialCost.includes(searchValue) ||
-                            materialQuantity.includes(searchValue) ||
-                            materialProvider.includes(searchValue) ||
-                            materialDate.includes(searchValue)
-                        ) {
-                            material.style.display = '';
-                        } else {
-                            material.style.display = 'none';
-                        }
+                        const fields = [
+                            'material-name',
+                            'material-description',
+                            'material-id',
+                            'material-cost',
+                            'material-quantity',
+                            'material-provider',
+                            'material-date'
+                        ];
+
+                        const match = fields.some(field => {
+                            return material.getElementsByClassName(field)[0].textContent.toLowerCase().includes(searchValue);
+                        });
+
+                        material.style.display = match ? '' : 'none';
                     });
                 }
             </script>
         </head>
         <body>
             <header>
-            <?php
-                
+                <?php
                 $pageTitle = "Header";
-                
                 $header = new header2();
                 $header->head2($pageTitle);
-            ?>
+                ?>
             </header>
             
             <div class="flex min-h-screen bg-gray-50 justify-center">
@@ -78,43 +72,10 @@ class Main {
                         $conex = $db->getConnection();
                         $consulta = "SELECT * FROM Materiales";
                         $resultado = mysqli_query($conex, $consulta);  
+
                         if ($resultado) {
                             while ($row = $resultado->fetch_assoc()) {
-                                echo '<div class="material-card uppercase max-w-xl cursor-pointer rounded-lg bg-white p-5 shadow duration-150 hover:scale-105 hover:shadow-md">';
-                                echo '  <div>';
-                                echo '    <div class="my-6 flex items-center justify-between px-4">';
-                                echo '      <p class="material-name font-bold text-2xl text-amber-500">' . $row["MaterialName"] . '</p>';
-                                echo '      <p class="material-id rounded-full bg-gray-400 px-3 py-2 text-xl font-semibold text-white">' . $row["idMaterial"] . '</p>';
-                                echo '    </div>';
-                                echo '    <div class="my-4 flex items-center justify-between px-4">';
-                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Descripción</p>';
-                                echo '      <p class="material-description rounded-full bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-600">' . $row["Description"] . '</p>';
-                                echo '    </div>';
-                                echo '    <div class="my-4 flex items-center justify-between px-4">';
-                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Costo Unitario</p>';
-                                echo '      <p class="material-cost rounded-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-600">$' . $row["costoUnitario"] . '</p>';
-                                echo '    </div>';
-                                echo '    <div class="my-4 flex items-center justify-between px-4">';
-                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Cantidad</p>';
-                                echo '      <p class="material-quantity rounded-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-600">' . $row["cantidadMaterial"] . '</p>';
-                                echo '    </div>';
-                                echo '    <div class="my-4 flex items-center justify-between px-4">';
-                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Proveedor</p>';
-                                echo '      <p class="material-provider rounded-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-600">' . $row["idProveedor"] . '</p>';
-                                echo '    </div>';
-                                echo '    <div class="my-4 flex items-center justify-between px-4">';
-                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Fecha</p>';
-                                echo '      <p class="material-date rounded-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-600">' . $row["date_reg"] . '</p>';
-                                echo '    </div>';
-                                echo '    <div class="my-4 flex items-center justify-between px-4">';
-                                echo '      <p class="text-base font-semibold text-gray-500 mr-10">Acción</p>';
-                                echo '      <p class="text-xl font-semibold text-gray-500">
-                                        <a class="items-center justify-center font-sans font-bold whitespace-nowrap select-none bg-yellow-500/20 text-yellow-600 hover:bg-yellow-500/50 py-1 px-2 text-xs rounded-md duration-700" href="../CRUD/editar.php?idMaterial=' . $row["idMaterial"] . '">Editar</a> | 
-                                        <a href="../CRUD/eliminar.php?idMaterial=' . $row["idMaterial"] . '" class="items-center justify-center font-sans font-bold whitespace-nowrap select-none bg-red-500/20 text-red-700 py-1 px-2 text-xs rounded-md hover:bg-red-500/50 duration-700">Eliminar</a>
-                                        </p>';
-                                echo '    </div>';
-                                echo '  </div>';
-                                echo '</div>';
+                                $this->renderMaterialCard($row);
                             } 
                         } else {
                             echo '<p>No se encontraron registros</p>';    
@@ -130,6 +91,40 @@ class Main {
             </footer>
         </body>
         </html>
+        <?php
+    }
+
+    private function renderMaterialCard($row) {
+        ?>
+        <div class="material-card uppercase max-w-xl cursor-pointer rounded-lg bg-white p-5 shadow duration-150 hover:scale-105 hover:shadow-md">
+            <div>
+                <?php
+                $this->renderMaterialField('material-name', 'text-amber-500', $row["MaterialName"], 'font-bold text-2xl');
+                $this->renderMaterialField('material-id', 'bg-gray-400 text-white', $row["idMaterial"], 'rounded-full px-3 py-2 text-xl font-semibold');
+                $this->renderMaterialField('material-description', 'bg-gray-200 text-gray-600', $row["Description"], 'rounded-full px-4 py-2 text-sm font-semibold');
+                $this->renderMaterialField('material-cost', 'bg-gray-200 text-gray-600', '$' . $row["costoUnitario"], 'rounded-full px-3 py-2 text-sm font-semibold');
+                $this->renderMaterialField('material-quantity', 'bg-gray-200 text-gray-600', $row["cantidadMaterial"], 'rounded-full px-3 py-2 text-sm font-semibold');
+                $this->renderMaterialField('material-provider', 'bg-gray-200 text-gray-600', $row["idProveedor"], 'rounded-full px-3 py-2 text-sm font-semibold');
+                $this->renderMaterialField('material-date', 'bg-gray-200 text-gray-600', $row["date_reg"], 'rounded-full px-3 py-2 text-sm font-semibold');
+                ?>
+                <div class="my-4 flex items-center justify-between px-4">
+                    <p class="text-base font-semibold text-gray-500 mr-10">Acción</p>
+                    <p class="text-xl font-semibold text-gray-500">
+                        <a class="items-center justify-center font-sans font-bold whitespace-nowrap select-none bg-yellow-500/20 text-yellow-600 hover:bg-yellow-500/50 py-1 px-2 text-xs rounded-md duration-700" href="../CRUD/editar.php?idMaterial=<?= $row['idMaterial'] ?>">Editar</a> | 
+                        <a href="../CRUD/eliminar.php?idMaterial=<?= $row['idMaterial'] ?>" class="items-center justify-center font-sans font-bold whitespace-nowrap select-none bg-red-500/20 text-red-700 py-1 px-2 text-xs rounded-md hover:bg-red-500/50 duration-700">Eliminar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    private function renderMaterialField($class, $bgClass, $content, $additionalClasses = '') {
+        ?>
+        <div class="my-4 flex items-center justify-between px-4">
+            <p class="material-field-label text-base font-semibold text-gray-500 mr-10"><?= ucfirst(str_replace('-', ' ', $class)) ?></p>
+            <p class="<?= $class ?> <?= $bgClass ?> <?= $additionalClasses ?>"><?= $content ?></p>
+        </div>
         <?php
     }
 }
