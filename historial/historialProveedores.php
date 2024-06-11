@@ -61,20 +61,6 @@ class Main {
         }
     }
 
-    private function renderTableHeaders() {
-        $headers = [
-            'idRegProveedor', 'idProveedor', 'Nombre', 'Material', 'Email', 'Telefono', 'Acción', 'Fecha'
-        ];
-
-        echo '<thead class="align-bottom">';
-        echo '<tr class="font-semibold text-xl text-amber-500 justify-center items-center">';
-        foreach ($headers as $header) {
-            echo "<th class='pb-3 text-start min-w-[120px]'>{$header}</th>";
-        }
-        echo '</tr>';
-        echo '</thead>';
-    }
-
     public function render() {
         $providers = $this->getProviders();
         ?>
@@ -98,7 +84,11 @@ class Main {
                                 match = true;
                             }
                         });
-                        provider.style.display = match ? '' : 'none';
+                        if (match) {
+                            provider.style.display = '';
+                        } else {
+                            provider.style.display = 'none';
+                        }
                     });
                 }
             </script>
@@ -134,7 +124,18 @@ class Main {
                             <div class="flex-auto block py-2 mr-6">
                                 <div class="overflow-x-auto ml-5">
                                     <table class="w-full my-0 border-neutral-900">
-                                        <?php $this->renderTableHeaders(); ?>
+                                        <thead class="align-bottom">
+                                            <tr class="font-semibold text-xl text-amber-500 justify-center items-center">
+                                                <th class="pb-3 text-start min-w-[120px]">idRegProveedor</th>
+                                                <th class="pb-3 text-start min-w-[120px]">idProveedor</th>
+                                                <th class="pb-3 text-start min-w-[90px]">Nombre</th>
+                                                <th class="pb-3 text-start">Material</th>
+                                                <th class="pb-3 text-start min-w-[90px]">Email</th>
+                                                <th class="pb-3 text-start">Telefono</th>
+                                                <th class="pb-3 text-start">Acción</th>
+                                                <th class="pb-3 text-start">Fecha</th>
+                                            </tr>
+                                        </thead>
                                         <tbody class="text-base font-semibold text-gray-900 justify-center items-center">
                                             <?php 
                                                 if (count($providers) > 0) {
