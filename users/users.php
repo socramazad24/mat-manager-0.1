@@ -82,13 +82,13 @@ class users
             $resultado = mysqli_query($conn, $consulta);
 
             if ($resultado) {
-                return "<script>Swal.fire({
+                echo "<script>Swal.fire({
                     icon: 'success',
                     title: 'Éxito',
                     text: 'Usuario registrado con éxito',
                 })</script>";
             } else {
-                return "<script>Swal.fire({
+                echo "<script>Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: 'Error al registrar el usuario',
@@ -96,7 +96,7 @@ class users
             }
 
             // Close the database connection
-            mysqli_close($conn);
+            //mysqli_close($conn);
             return;
         }
     }
