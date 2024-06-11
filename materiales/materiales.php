@@ -7,7 +7,7 @@ use matmanager\Database;
 
     class materiales 
     {
-        function registerMateriales() {
+       public function registerMateriales() {
             $db = new Database();
                 $conex = $db->getConnection();
                 if (isset($_POST['register'])) {

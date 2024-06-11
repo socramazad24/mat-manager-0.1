@@ -4,7 +4,7 @@ require_once __DIR__ . '/../Database.php';
 use matmanager\Database;
 class Proveedores
 {
-    function RegisterProvider()
+   public function RegisterProvider()
     {
 
         $db = new Database();
@@ -75,7 +75,7 @@ class Proveedores
                                     text: 'El correo electrónico ya está registrado. Por favor, introduzca otro correo electrónico.',
                                 })</script>";
                     return;
-                    $errors[] = "";
+                    
                 }
                 if ($row['telefono'] == $telefono) {
                     echo "<script>Swal.fire({
@@ -101,7 +101,7 @@ class Proveedores
                     text: 'Proveedor registrado exitosamente.'
                 })</script>";
 
-    return;
+
             } else {
                 // Error en el registro, muestra una alerta con SweetAlert2
                 return "<script>Swal.fire({

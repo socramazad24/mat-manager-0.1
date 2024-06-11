@@ -103,7 +103,7 @@ class Order {
 }
 
 class RegistrarPedido{
-    function RegisterPedido() {
+   public function RegisterPedido() {
          
         $db = new Database();
         $conex = $db->getConnection();

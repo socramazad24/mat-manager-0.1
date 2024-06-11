@@ -140,7 +140,7 @@ class Materials {
 
 class registerMateriales 
 {
-    function registerMateriales() {
+   public function registerMateriales() {
         $db = new Database();
             $conex = $db->getConnection();
         if (isset($_POST['register'])) {

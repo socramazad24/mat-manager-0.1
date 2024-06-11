@@ -105,7 +105,7 @@ class MainProvider
 
 class RegisterProveedores
 {
-    function RegisterProvider()
+   public function RegisterProvider()
     {
 
         $db = new Database();
@@ -176,7 +176,7 @@ class RegisterProveedores
                                     text: 'El correo electrónico ya está registrado. Por favor, introduzca otro correo electrónico.',
                                 })</script>";
                     return;
-                    $errors[] = "";
+                    
                 }
                 if ($row['telefono'] == $telefono) {
                     echo "<script>Swal.fire({

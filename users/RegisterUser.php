@@ -102,6 +102,7 @@ class Users
 
             // Close the database connection
             mysqli_close($conn);
+            return;
         }
     }
 }
