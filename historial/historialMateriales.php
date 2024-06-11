@@ -1,12 +1,37 @@
 <?php
 namespace historial;
+
 require_once "../vendor/autoload.php";
 require_once "../Database.php";
 use matmanager\Database;
 use templates\header;
 use templates\Footer;
+
 class Main {
+    private $db;
+
+    public function __construct() {
+        $this->db = new Database();
+    }
+
+    public function getMaterials() {
+        $conex = $this->db->getConnection();
+        $consulta = "SELECT * FROM auditoriamateriales";
+        $resultado = mysqli_query($conex, $consulta);
+        $materials = [];
+
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $materials[] = $row;
+            }
+        }
+
+        mysqli_close($conex);
+        return $materials;
+    }
+
     public function render() {
+        $materials = $this->getMaterials();
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -45,7 +70,6 @@ class Main {
                 $header->head($pageTitle);
                 ?>
             </header>
-
             <!-- Table -->
             <div class="flex flex-wrap">
                 <div class="w-full px-3 mb-6 mx-auto">
@@ -62,12 +86,11 @@ class Main {
                                     <input type="text" id="search" onkeyup="filterMaterials()" placeholder="Buscar material..." class="p-2 border rounded-lg w-64">
                                 </div>
                             </div>
-
                             <!-- Table Body -->
                             <div class="flex-auto block py-2 mr-6">
                                 <div class="overflow-x-auto ml-5">
-                                    <table class="w-full my-0 border-neutral-900 ">
-                                        <thead class="align-bottom ">
+                                    <table class="w-full my-0 border-neutral-900">
+                                        <thead class="align-bottom">
                                             <tr class="font-semibold text-xl text-amber-500 justify-center items-center">
                                                 <th class="pb-3 text-start min-w-[120px]">idR_material</th>
                                                 <th class="pb-3 text-start min-w-[120px]">ID Material</th>
@@ -81,42 +104,26 @@ class Main {
                                             </tr>
                                         </thead>
                                         <tbody class="text-base font-semibold text-gray-900 justify-center items-center">
-                                            <?php 
-                                                $db = new Database();
-                                                $conex = $db->getConnection();
-                                                $consulta = "SELECT * FROM auditoriamateriales";
-                                                $resultado = mysqli_query($conex, $consulta);  
-                                                if ($resultado){
-                                                    while ($row = $resultado->fetch_assoc()){
-                                                        echo "<tr>";
-                                                        echo "<td class=''>" . $row["idR_material"] . "</td>";
-                                                        echo "<td class=''>" . $row["idMaterial"] . "</td>";
-                                                        echo "<td class='uppercase'>" . $row["materialName"] . "</td>";
-                                                        echo "<td class='uppercase'>" . $row["description"] . "</td>";
-                                                        echo "<td class='py-6 px-4'>" . $row["costoUnitario"] . "</td>";
-                                                        echo "<td class='py-6 px-4'>" . $row["cantidadMaterial"] . "</td>";
-                                                        echo "<td class='py-6 px-4 uppercase'>" . $row["proveedor"] . "</td>";
-                                                        echo "<td class='py-6 px-2'>";
-                                                        
-                                                        // Verificar el estado y asignar las clases correspondientes
-                                                        if ($row["Action"] == "insertado") {
-                                                            echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-green-500/20 text-green-600 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
-                                                        } elseif ($row["Action"] == "eliminado") {
-                                                            echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-red-500/20 text-red-700 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
-                                                        } else {
-                                                            echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-yellow-500/20 text-yellow-600 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
-                                                        }
-                                                        echo $row["Action"] . "</div></td>";
-                                                        echo "<td class='py-6 px-4'>" . $row["date_reg"] . "</td>";
-                                                        echo "</tr>";
-                                                        
-                                                    } 
-                                                } else {
-                                                    echo "No se encontraron registros";    
-                                                }
-                                                mysqli_close($conex);
-                                            ?>
-
+                                            <?php foreach ($materials as $row) { ?>
+                                                <tr>
+                                                    <td><?= $row["idR_material"] ?></td>
+                                                    <td><?= $row["idMaterial"] ?></td>
+                                                    <td class="uppercase"><?= $row["materialName"] ?></td>
+                                                    <td class="uppercase"><?= $row["description"] ?></td>
+                                                    <td class="py-6 px-4"><?= $row["costoUnitario"] ?></td>
+                                                    <td class="py-6 px-4"><?= $row["cantidadMaterial"] ?></td>
+                                                    <td class="py-6 px-4 uppercase"><?= $row["proveedor"] ?></td>
+                                                    <td class="py-6 px-2">
+                                                        <?php 
+                                                            $actionClass = $this->getActionClass($row["Action"]);
+                                                        ?>
+                                                        <div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none <?= $actionClass ?> py-1 px-2 text-xs rounded-md' style='opacity: 1;'>
+                                                            <?= $row["Action"] ?>
+                                                        </div>
+                                                    </td>
+                                                    <td class="py-6 px-4"><?= $row["date_reg"] ?></td>
+                                                </tr>
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -125,7 +132,6 @@ class Main {
                     </div>
                 </div>
             </div>
-
             <footer> 
                 <?php $pageTitle = "Footer"; 
                 $footer = new Footer;
@@ -133,10 +139,18 @@ class Main {
             </footer>
         </body>
         </html>
-
-
-        
         <?php
+    }
+
+    private function getActionClass($action) {
+        switch ($action) {
+            case 'insertado':
+                return 'bg-green-500/20 text-green-600';
+            case 'eliminado':
+                return 'bg-red-500/20 text-red-700';
+            default:
+                return 'bg-yellow-500/20 text-yellow-600';
+        }
     }
 }
 
