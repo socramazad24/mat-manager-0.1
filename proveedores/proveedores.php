@@ -1,12 +1,13 @@
 <?php
 namespace proveedores;
+
 require_once __DIR__ . '/../Database.php';
 use matmanager\Database;
+
 class Proveedores
 {
-   public function RegisterProvider()
+    public function RegisterProvider()
     {
-
         $db = new Database();
         $conex = $db->getConnection();
         if (isset($_POST['register'])) {
@@ -17,7 +18,6 @@ class Proveedores
             $correo = trim($_POST['correo']);
             $direccion = trim($_POST['direccion']);
             $datereg = date("y/m/d");
-            $errors = array(); // Array para almacenar mensajes de error
 
             // Validación de campos obligatorios
             if (
@@ -56,17 +56,18 @@ class Proveedores
             }
 
             // Validación de existencia de proveedor
-            $consultaProveedor = "SELECT * FROM proovedores WHERE idProveedor = '$idProveedor' OR correo = '$correo' OR telefono = '$telefono'";
-            $resultadoProveedor = mysqli_query($conex, $consultaProveedor);
-            if (mysqli_num_rows($resultadoProveedor) > 0) {
-                $row = mysqli_fetch_assoc($resultadoProveedor);
+            $consultaProveedor = $conex->prepare("SELECT * FROM proovedores WHERE idProveedor = ? OR correo = ? OR telefono = ?");
+            $consultaProveedor->bind_param("sss", $idProveedor, $correo, $telefono);
+            $consultaProveedor->execute();
+            $resultadoProveedor = $consultaProveedor->get_result();
+            if ($resultadoProveedor->num_rows > 0) {
+                $row = $resultadoProveedor->fetch_assoc();
                 if ($row['idProveedor'] == $idProveedor) {
                     return "<script>Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
                                     text: 'La ID ya está registrada. Por favor, introduzca otra ID.',
                                 })</script>";
-                    
                 }
                 if ($row['correo'] == $correo) {
                     echo "<script>Swal.fire({
@@ -75,7 +76,6 @@ class Proveedores
                                     text: 'El correo electrónico ya está registrado. Por favor, introduzca otro correo electrónico.',
                                 })</script>";
                     return;
-                    
                 }
                 if ($row['telefono'] == $telefono) {
                     echo "<script>Swal.fire({
@@ -87,12 +87,11 @@ class Proveedores
                 }
             }
 
-            // Si hay errores, muestra una alerta con SweetAlert2
-
             // Si no hay errores, procede con el registro
-            $consulta = "INSERT INTO proovedores(idProveedor, nameProveedor, materiales, telefono, correo, direccion, date_reg) 
-                            VALUES ('$idProveedor', '$nombre', '$materiales', '$telefono', '$correo', '$direccion', '$datereg')";
-            $resultado = mysqli_query($conex, $consulta);
+            $consulta = $conex->prepare("INSERT INTO proovedores (idProveedor, nameProveedor, materiales, telefono, correo, direccion, date_reg) 
+                                         VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $consulta->bind_param("sssssss", $idProveedor, $nombre, $materiales, $telefono, $correo, $direccion, $datereg);
+            $resultado = $consulta->execute();
             if ($resultado) {
                 // Registro exitoso, muestra una alerta con SweetAlert2          
                 return "<script>Swal.fire({
@@ -100,8 +99,6 @@ class Proveedores
                     title: 'Éxito',
                     text: 'Proveedor registrado exitosamente.'
                 })</script>";
-
-
             } else {
                 // Error en el registro, muestra una alerta con SweetAlert2
                 return "<script>Swal.fire({
