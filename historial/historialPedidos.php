@@ -96,7 +96,7 @@ class Main {
         <body>
             <!-- Header -->
             <header>
-                <?php $pageTitle = "Header"; 
+                <?php $pageTitle = "Header";
                 $header = new header;
                 $header->head($pageTitle);
                 ?>
@@ -155,7 +155,7 @@ class Main {
             </div>
 
             <footer>
-                <?php $pageTitle = "Footer"; 
+                <?php $pageTitle = "Footer";
                 $footer = new Footer;
                 $footer->Footer($pageTitle);?>
             </footer>

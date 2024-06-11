@@ -97,7 +97,7 @@ class Main {
             <!-- Header -->
             <header>
                 <?php 
-                $pageTitle = "Header"; 
+                $pageTitle = "Header";
                 $header = new header;
                 $header->head($pageTitle);
                 ?>
@@ -157,7 +157,7 @@ class Main {
 
             <footer>
                 <?php 
-                $pageTitle = "Footer"; 
+                $pageTitle = "Footer";
                 $footer = new Footer;
                 $footer->Footer($pageTitle);
                 ?>
