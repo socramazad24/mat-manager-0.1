@@ -11,7 +11,8 @@ class proveedoresTest extends TestCase
     protected function setUp(): void
     {
         // Setup a database connection for testing purposes
-        $this->db = new mysqli("localhost", "root", "", "test_db");
+        $password = getenv('MYSQL_SECURE_PASSWORD');
+        $this->db = new mysqli("localhost", "root", "$password", "test_db");
 
         // Ensure the table is empty before each test
         $this->db->query("TRUNCATE TABLE proovedores");

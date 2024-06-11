@@ -1,5 +1,6 @@
 <?php
 namespace users;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../Database.php';
 use matmanager\Database;
@@ -20,7 +21,7 @@ class users
             $role = $_POST['role'];
             $datereg = date("y/m/d");
 
-            // Validate password and confirmation match
+            // Validar que las contraseñas coincidan
             if ($password !== $password_confirmation) {
                 echo "<script>Swal.fire({
                     icon: 'error',
@@ -30,7 +31,7 @@ class users
                 return;
             }
 
-            // Ensure all required fields are filled
+            // Validar que todos los campos obligatorios estén completos
             if (
                 strlen($idEmployee) < 1 ||
                 strlen($firstName) < 1 ||
@@ -57,18 +58,20 @@ class users
                 return;
             }
 
-            // Hash password
+            // Hashear la contraseña
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            // Create database connection
+            // Crear conexión a la base de datos
             $conex = new Database;
             $conn = $conex->getConnection();
 
-            // Check if username already exists
-            $sql_check = "SELECT * FROM users WHERE username = '$username'";
-            $result_check = mysqli_query($conn, $sql_check);
+            // Verificar si el nombre de usuario ya existe
+            $stmt_check = $conn->prepare("SELECT * FROM users WHERE username = ?");
+            $stmt_check->bind_param("s", $username);
+            $stmt_check->execute();
+            $result_check = $stmt_check->get_result();
 
-            if (mysqli_num_rows($result_check) > 0) {
+            if ($result_check->num_rows > 0) {
                 return "<script>Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -76,10 +79,10 @@ class users
                 })</script>";
             }
 
-            // Insert new user into database
-            $consulta = "INSERT INTO users(idEmployee, firstName, lastName, username, password, email, phone, role, date_reg) 
-            VALUES ('$idEmployee', '$firstName', '$lastName', '$username', '$password', '$email', '$phone', '$role', '$datereg')";
-            $resultado = mysqli_query($conn, $consulta);
+            // Insertar el nuevo usuario en la base de datos
+            $stmt = $conn->prepare("INSERT INTO users(idEmployee, firstName, lastName, username, password, email, phone, role, date_reg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssssss", $idEmployee, $firstName, $lastName, $username, $hashed_password, $email, $phone, $role, $datereg);
+            $resultado = $stmt->execute();
 
             if ($resultado) {
                 echo "<script>Swal.fire({
@@ -95,11 +98,10 @@ class users
                 })</script>";
             }
 
-            // Close the database connection
-            //mysqli_close($conn);
+            // Cerrar la conexión a la base de datos
+            $stmt->close();
+            $conn->close();
             return;
         }
     }
 }
-$users = new Users;
-$users -> processRegistration();
