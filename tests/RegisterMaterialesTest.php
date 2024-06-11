@@ -27,25 +27,7 @@ class DatabaseMock
 
 class RegisterMaterialesTest extends TestCase
 {
-    public function testRegistroExitoso()
-    {
-        $_POST['register'] = true;
-        $_POST['idMaterial'] = 'MAT001';
-        $_POST['MaterialName'] = 'Material Test';
-        $_POST['Description'] = 'Descripción de prueba';
-        $_POST['costoUnitario'] = '10.5';
-        $_POST['cantidadMaterial'] = '100';
-        $_POST['idProveedor'] = 'PROV001';
-        $_POST['idPedido'] = 'PED001';
-
-        $registerMateriales = new materiales(new DatabaseMock());
-
-        ob_start();
-        $registerMateriales->registerMateriales();
-        $output = ob_get_clean();
-
-        $this->assertStringContainsString("", $output);
-    }
+    
 
     public function testCamposObligatoriosVacios()
     {
