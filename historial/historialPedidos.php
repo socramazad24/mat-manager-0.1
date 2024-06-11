@@ -1,5 +1,6 @@
 <?php
 namespace historial;
+
 require_once "../vendor/autoload.php";
 require_once "../Database.php";
 use matmanager\Database;
@@ -7,7 +8,61 @@ use templates\header;
 use templates\Footer;
 
 class Main {
+    private $db;
+
+    public function __construct() {
+        $this->db = new Database();
+    }
+
+    private function getOrders() {
+        $conex = $this->db->getConnection();
+        $consulta = "SELECT * FROM historialpedidos";
+        $resultado = mysqli_query($conex, $consulta);
+        $orders = [];
+
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $orders[] = $row;
+            }
+        }
+
+        mysqli_close($conex);
+        return $orders;
+    }
+
+    private function renderOrderRow($row) {
+        $actionClass = $this->getActionClass($row["accion"]);
+        return "
+            <tr>
+                <td>{$row['idRegPedido']}</td>
+                <td>{$row['idPedido']}</td>
+                <td class='uppercase'>{$row['nameProovedor']}</td>
+                <td class='uppercase'>{$row['material']}</td>
+                <td class='py-6 px-4'>{$row['cantidad']}</td>
+                <td class='py-6 px-4'>{$row['precioUnitario']}</td>
+                <td class='py-6 px-2'>
+                    <div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none {$actionClass} py-1 px-2 text-xs rounded-md'>
+                        {$row['accion']}
+                    </div>
+                </td>
+                <td class='py-6 px-4'>{$row['date_reg']}</td>
+            </tr>
+        ";
+    }
+
+    private function getActionClass($action) {
+        switch ($action) {
+            case 'insertado':
+                return 'bg-green-500/20 text-green-600';
+            case 'eliminado':
+                return 'bg-red-500/20 text-red-700';
+            default:
+                return 'bg-yellow-500/20 text-yellow-600';
+        }
+    }
+
     public function render() {
+        $orders = $this->getOrders();
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -42,8 +97,8 @@ class Main {
             <!-- Header -->
             <header>
                 <?php $pageTitle = "Header"; 
-                    $header = new header;
-                    $header->head($pageTitle);
+                $header = new header;
+                $header->head($pageTitle);
                 ?>
             </header>
 
@@ -67,8 +122,8 @@ class Main {
                             <!-- Table Body -->
                             <div class="flex-auto block py-2 mr-6">
                                 <div class="overflow-x-auto ml-5">
-                                    <table class="w-full my-0 border-neutral-900 ">
-                                        <thead class="align-bottom ">
+                                    <table class="w-full my-0 border-neutral-900">
+                                        <thead class="align-bottom">
                                             <tr class="font-semibold text-xl text-amber-500">
                                                 <th class="pb-3 text-start min-w-[120px]">idRegPedido</th>
                                                 <th class="pb-3 text-start min-w-[120px]">ID Pedido</th>
@@ -82,38 +137,13 @@ class Main {
                                         </thead>
                                         <tbody class="text-base font-semibold text-gray-900">
                                             <?php 
-                                                $db = new Database();
-                                                $conex = $db->getConnection();
-                                                $consulta = "SELECT * FROM historialpedidos";
-                                                $resultado = mysqli_query($conex, $consulta);  
-                                                if ($resultado){
-                                                    while ($row = $resultado->fetch_assoc()){
-                                                        echo "<tr>";
-                                                        echo "<td class=''>" . $row["idRegPedido"] . "</td>";
-                                                        echo "<td class=''>" . $row["idPedido"] . "</td>";
-                                                        echo "<td class='uppercase'>" . $row["nameProovedor"] . "</td>";
-                                                        echo "<td class='uppercase'>" . $row["material"] . "</td>";
-                                                        echo "<td class='py-6 px-4'>" . $row["cantidad"]. "</td>";
-                                                        echo "<td class='py-6 px-4'>" . $row["precioUnitario"] . "</td>";
-                                                        echo "<td class='py-6 px-2'>";
-                                                        
-                                                        // Verificar el estado y asignar las clases correspondientes
-                                                        if ($row["accion"] == "insertado") {
-                                                            echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-green-500/20 text-green-600 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
-                                                        } elseif ($row["accion"] == "eliminado") {
-                                                            echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-red-500/20 text-red-700 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
-                                                        } else {
-                                                            echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-yellow-500/20 text-yellow-600 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
-                                                        }
-                                                        echo $row["accion"] . "</div></td>";
-                                                        echo "<td class='py-6 px-4'>" . $row["date_reg"] . "</td>";
-                                                        echo "</tr>";
-                                                        
-                                                    } 
+                                                if (count($orders) > 0) {
+                                                    foreach ($orders as $row) {
+                                                        echo $this->renderOrderRow($row);
+                                                    }
                                                 } else {
-                                                    echo "No se encontraron registros";    
+                                                    echo "<tr><td colspan='8'>No se encontraron registros</td></tr>";
                                                 }
-                                                mysqli_close($conex);
                                             ?>
                                         </tbody>
                                     </table>
@@ -124,18 +154,13 @@ class Main {
                 </div>
             </div>
 
-            <footer> 
+            <footer>
                 <?php $pageTitle = "Footer"; 
-                    $footer = new Footer;
-                    $footer->Footer($pageTitle);?>
-                ?>
+                $footer = new Footer;
+                $footer->Footer($pageTitle);?>
             </footer>
         </body>
         </html>
-
-        
-
-        
         <?php
     }
 }

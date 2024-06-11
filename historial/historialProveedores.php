@@ -1,5 +1,6 @@
 <?php
 namespace historial;
+
 require_once "../vendor/autoload.php";
 require_once "../Database.php";
 use matmanager\Database;
@@ -7,7 +8,61 @@ use templates\header;
 use templates\Footer;
 
 class Main {
+    private $db;
+
+    public function __construct() {
+        $this->db = new Database();
+    }
+
+    private function getProviders() {
+        $conex = $this->db->getConnection();
+        $consulta = "SELECT * FROM historialproveedores";
+        $resultado = mysqli_query($conex, $consulta);
+        $providers = [];
+
+        if ($resultado) {
+            while ($row = $resultado->fetch_assoc()) {
+                $providers[] = $row;
+            }
+        }
+
+        mysqli_close($conex);
+        return $providers;
+    }
+
+    private function renderProviderRow($row) {
+        $actionClass = $this->getActionClass($row["accion"]);
+        return "
+            <tr>
+                <td>{$row['idRegProveedor']}</td>
+                <td>{$row['idProveedor']}</td>
+                <td class='uppercase'>{$row['nameProveedor']}</td>
+                <td class='uppercase'>{$row['materiales']}</td>
+                <td class='py-6 px-4'>{$row['correo']}</td>
+                <td class='py-6 px-2'>{$row['telefono']}</td>
+                <td class='py-6 px-2'>
+                    <div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none {$actionClass} py-1 px-2 text-xs rounded-md'>
+                        {$row['accion']}
+                    </div>
+                </td>
+                <td class='py-6 px-4'>{$row['date_reg']}</td>
+            </tr>
+        ";
+    }
+
+    private function getActionClass($action) {
+        switch ($action) {
+            case 'agregado':
+                return 'bg-green-500/20 text-green-600';
+            case 'eliminado':
+                return 'bg-red-500/20 text-red-700';
+            default:
+                return 'bg-yellow-500/20 text-yellow-600';
+        }
+    }
+
     public function render() {
+        $providers = $this->getProviders();
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -41,9 +96,10 @@ class Main {
         <body>
             <!-- Header -->
             <header>
-                <?php $pageTitle = "Header"; 
-                    $header = new header;
-                    $header->head($pageTitle);
+                <?php 
+                $pageTitle = "Header"; 
+                $header = new header;
+                $header->head($pageTitle);
                 ?>
             </header>
 
@@ -81,40 +137,15 @@ class Main {
                                             </tr>
                                         </thead>
                                         <tbody class="text-base font-semibold text-gray-900 justify-center items-center">
-                                        <?php 
-                                        $db = new Database();
-                                        $conex = $db->getConnection();
-                                        $consulta = "SELECT * FROM historialproveedores";
-                                        $resultado = mysqli_query($conex, $consulta);  
-                                        if ($resultado){
-                                            while ($row = $resultado->fetch_assoc()){
-                                                echo "<tr>";
-                                                echo "<td class=''>" . $row["idRegProveedor"] . "</td>";
-                                                echo "<td class=''>" . $row["idProveedor"] . "</td>";
-                                                echo "<td class='uppercase'>" . $row["nameProveedor"] . "</td>";
-                                                echo "<td class='uppercase'>" . $row["materiales"] . "</td>";
-                                                echo "<td class='py-6 px-4'>" . $row["correo"] . "</td>";
-                                                echo "<td class='py-6 px-2'>" . $row["telefono"] . "</td>";
-                                                echo "<td class='py-6 px-2'>";
-                                                
-                                                // Verificar el estado y asignar las clases correspondientes
-                                                if ($row["accion"] == "agregado") {
-                                                    echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-green-500/20 text-green-600 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
-                                                } elseif ($row["accion"] == "eliminado") {
-                                                    echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-red-500/20 text-red-700 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
+                                            <?php 
+                                                if (count($providers) > 0) {
+                                                    foreach ($providers as $row) {
+                                                        echo $this->renderProviderRow($row);
+                                                    }
                                                 } else {
-                                                    echo "<div class='relative grid items-center justify-center font-sans font-bold uppercase whitespace-nowrap select-none bg-yellow-500/20 text-yellow-600 py-1 px-2 text-xs rounded-md' style='opacity: 1;'>";
+                                                    echo "<tr><td colspan='8'>No se encontraron registros</td></tr>";
                                                 }
-                                                echo $row["accion"] . "</div></td>";
-                                                echo "<td class='py-6 px-4'>" . $row["date_reg"] . "</td>";
-                                                echo "</tr>";
-                                                
-                                            } 
-                                        } else {
-                                            echo "No se encontraron registros";    
-                                        }
-                                        mysqli_close($conex);
-                                    ?>
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -124,18 +155,15 @@ class Main {
                 </div>
             </div>
 
-            <footer> 
-                <?php $pageTitle = "Footer"; 
-                    $footer = new Footer;
-                    $footer->Footer($pageTitle);?>
+            <footer>
+                <?php 
+                $pageTitle = "Footer"; 
+                $footer = new Footer;
+                $footer->Footer($pageTitle);
                 ?>
             </footer>
         </body>
         </html>
-
-        
-
-        
         <?php
     }
 }
