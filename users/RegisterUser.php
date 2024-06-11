@@ -92,18 +92,18 @@ class Users
                     title: 'Éxito',
                     text: 'Usuario registrado con éxito',
                 })</script>";
-                return;
+                
             } else {
                 echo "<script>Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: 'Error al registrar el usuario',
                 })</script>";
-                return;
+                
             }
 
             // Close the database connection
-            mysqli_close($conn);
+            //mysqli_close($conn);
             return;
         }
     }
